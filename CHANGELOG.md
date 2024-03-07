@@ -155,8 +155,12 @@ log.
 - Changed project from Ad blocker to Online Market place
 - Researched what is the most efficient infrastructure to use for development.
 - Updated readmefile
+
+### Added: 
+- Written Proposal.docx
+
 ### Hours spent:
-- 1 hours
+- 2 hours
 
 Followed the change log example from:
 
