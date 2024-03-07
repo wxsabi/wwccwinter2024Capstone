@@ -1,11 +1,10 @@
 # Change Log
 Capstone Project Change Log
-Ad Blocker for Safari
+Online Market Place
 Jay Cisneros
 
-This project aims to be an Ad Blocker for Safari with the intent of adding
-support for the mobile version of the browser and subsequently, other
-browsers as well.
+This project aims to be an online market place similar to Craigslist 
+or Facebook Marketplace, where users can buy and sell goods and or services.
 
 All notable changes to this project will be documented in this file. These
 entries will change as time goes by to better reflect the project's
@@ -147,6 +146,17 @@ log.
 
 ## Total Hours:
 - 60
+
+# ----------------------------------------------------------
+
+## [0.1] - 2024-03-6
+
+### Changed:
+- Changed project from Ad blocker to Online Market place
+- Researched what is the most efficient infrastructure to use for development.
+- Updated readmefile
+### Hours spent:
+- 1 hours
 
 Followed the change log example from:
 
