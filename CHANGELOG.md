@@ -162,6 +162,18 @@ log.
 ### Hours spent:
 - 2 hours
 
+## [0.1] - 2024-03-14
+
+### Changed:
+- Completed CS231 Final Paper
+
+### Added: 
+- CS231 Final.docx
+- CS231 Final.pdf
+
+### Hours spent:
+- 4 hours
+
 Followed the change log example from:
 
 [juampynr](https://gist.github.com/juampynr/4c18214a8eb554084e21d6e288a18a2c)
