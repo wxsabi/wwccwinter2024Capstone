@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grocery List</title>
+</head>
+<body>
+    <h1>Grocery List</h1>
+    <ul>
+        {{range .}}
+            <li>ID: {{.ID}}, Item: {{.Name}}</li>
+        {{end}}
+    </ul>
+    <footer>
+        <p>JaySoft - All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
