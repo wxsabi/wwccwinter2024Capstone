@@ -1,5 +1,17 @@
 <hr>
 
+## Sat Mar 23 15:49:56 2024 -0700
+### Author: Jay Cisneros <jaycisneros@jacm.io>
+#### commit: `3e8ae939bd8cb45606b1e0d6528d07291be237dd`
+
+```
+Time spent: 3 hrs
+
+[Upgrade]:
+- Upgraded the cacp.sh script to better parse the CHANGELOG.md file
+
+```<hr>
+
 ## Sat Mar 23 13:11:24 2024 -0700
 ### Author: Jay Cisneros <jaycisneros@jacm.io>
 #### commit: `5a45bf8b23db2c1441c53fe21ea66b2d9e86ece9`
