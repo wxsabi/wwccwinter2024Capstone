@@ -1,3 +1,16 @@
+commit 5bdec4365c6fe0145e7fad621e2421ead37430c7
+Author: Jay Cisneros <jaycisneros@jacm.io>
+Date:   Sat Mar 23 13:11:23 2024 -0700
+
+    Time spent: 2 hrs
+    
+    [Addition]:
+    - Created the cacp.sh script to automate the process of updating the git repo and the changelog.
+
+ .directory   |  2 +-
+ CHANGELOG.md |  9 +++++++
+ cacp.sh      | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 88 insertions(+), 1 deletion(-)
 commit a4dc4ce1b4d3cbc3ca06585cc342eb892e4c7d56
 Author: Jay Cisneros <jaycisneros@jacm.io>
 Date:   Fri Mar 22 22:31:52 2024 -0700
