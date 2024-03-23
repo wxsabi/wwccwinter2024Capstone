@@ -51,21 +51,31 @@ nano commit_msg.txt
 git commit -F commit_msg.txt
 
 # Save current git log to a temporary file
-git log -1 --stat > temp.txt
+string='```'
+git log -1 --pretty=format:"<hr>%n%n## %ad%n### Author: %an <%ae>%n#### commit: \`%H\`%n%n$string%n%B%n$string" > latest_commit.txt
 
-# Check if CHANGELOG.md exists and prepend temp.txt to it
+# Create a temporary file
+touch temp.txt
+
+# If CHANGELOG.md exists, concatenate its contents to latest_commit.txt
 if test -f CHANGELOG.md
 then
-    cat CHANGELOG.md >> temp.txt
+    cat latest_commit.txt CHANGELOG.md > temp.txt
+else
+    cp latest_commit.txt temp.txt
 fi
 
+# Rename temp.txt to CHANGELOG.md
 mv temp.txt CHANGELOG.md
+
+# Remove the original latest_commit.txt
+rm latest_commit.txt
 
 # Push changes to main branch
 git push origin main
 
 # Delete the temporaty commit message file
-echo "Deleting temporary commmit message file..."
+echo "Deleting temporary files..."
 rm commit_msg.txt
 
 # Update remote changelog
