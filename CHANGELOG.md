@@ -1,3 +1,12 @@
+commit a4dc4ce1b4d3cbc3ca06585cc342eb892e4c7d56
+Author: Jay Cisneros <jaycisneros@jacm.io>
+Date:   Fri Mar 22 22:31:52 2024 -0700
+
+    Update CHANGELOG.md
+
+ CHANGELOG.md | 188 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 188 insertions(+)
+
 commit ff153e584f17421f37fd3dbbeff07b15d365ef09
 Author: Jay Cisneros <jaycisneros@jacm.io>
 Date:   Fri Mar 22 22:28:35 2024 -0700
