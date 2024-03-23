@@ -52,7 +52,7 @@ git commit -F commit_msg.txt
 
 # Save current git log to a temporary file
 string='```'
-git log -1 --pretty=format:"<hr>%n%n## %ad%n### Author: %an <%ae>%n#### commit: \`%H\`%n%n$string%n%B%n$string" > latest_commit.txt
+git log -1 --pretty=format:"<hr>%n%n### %ad%n#### Author: %an <%ae>%n#### commit: \`%H\`%n%n$string%n%B%n$string%n" > latest_commit.txt
 
 # Create a temporary file
 touch temp.txt
