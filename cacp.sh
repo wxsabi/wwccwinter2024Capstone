@@ -29,20 +29,23 @@ else
     echo "nano has been found in this system"
 fi
 
-# Check for changes
-if git diff-index --quiet HEAD --
-then
-    echo "No changes to commit"
-    exit 0
-else
-    echo "Found changes to the local repository"
-fi
-
 # Add all changes to staging
 git add .
 
+# Check for changes
+if git status --porcelain | grep -q '^[MADRC\?\?]'
+then
+    echo "Found changes to the local repository"
+else
+    echo "No changes to commit"
+    exit 0
+fi
+
+# var to be used
+string='```'
+
 # Create a template file
-echo -e "Time spent:\n\n[]:" > commit_msg.txt
+echo -e "Time spent:\n\n[]\n" > commit_msg.txt
 
 # Write commit message to a temporary file
 nano commit_msg.txt
@@ -51,8 +54,7 @@ nano commit_msg.txt
 git commit -F commit_msg.txt
 
 # Save current git log to a temporary file
-string='```'
-git log -1 --pretty=format:"<hr>%n%n### %ad%n#### Author: %an <%ae>%n#### commit: \`%H\`%n%n$string%n%B%n$string%n" > latest_commit.txt
+git log -1 --pretty=format:"<hr>%n%n### %ad%n#### Author: %an <%ae>%n#### commit: \`%H\`%n%n%n%B%n%n" > latest_commit.txt
 
 # Create a temporary file
 touch temp.txt
