@@ -1,5 +1,34 @@
 <hr>
 
+### Sat Mar 23 17:07:42 2024 -0700
+#### Author: Jay Cisneros <jaycisneros@jacm.io>
+#### commit: `3c8fa9448824d37bc03f02054e4d555b23a0f1f9`
+
+
+Time spent: 1hr
+
+[Update]
+- This is the final update to the cacp.sh cript... I hope.
+- I just couldn't help having too much fun with this.
+- I'm particularly proud of this code:
+
+```bash
+# Add all changes to staging
+git add .
+
+# Check for changes
+if git status --porcelain | grep -q '^[MADRC\?\?]'
+then
+    echo "Found changes to the local repository"
+else
+    echo "No changes to commit"
+    exit 0
+fi
+```
+
+
+<hr>
+
 ### Sat Mar 23 15:58:20 2024 -0700
 #### Author: Jay Cisneros <jaycisneros@jacm.io>
 #### commit: `257ce5ba28b722882f49dcf879c9f7daf3f76c55`
