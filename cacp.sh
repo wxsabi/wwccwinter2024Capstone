@@ -45,7 +45,7 @@ fi
 string='```'
 
 # Create a template file
-echo -e "Time spent:\n\n[]\n" > commit_msg.txt
+echo -e "[]:\n\nTime spent:\n\n-" > commit_msg.txt
 
 # Write commit message to a temporary file
 nano commit_msg.txt

@@ -1,8 +1,8 @@
-package offering
+package models
 
 import "time"
 
-type Offering struct {
+type Item struct {
 	ID          int
 	Name        string
 	Description string
@@ -10,6 +10,6 @@ type Offering struct {
 	ListedAt    time.Time
 }
 
-func (i Offering) DisplayName() string {
+func (i Item) DisplayName() string {
 	return i.Name
 }
