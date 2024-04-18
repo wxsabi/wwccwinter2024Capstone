@@ -1,5 +1,6 @@
 - Add image support for users 
 - Add image support for items
+- hash the passwords
 - use bcrypt to let users log in
 - create a verbose mode for debugging with an admin toggle
 - figure out user permissions

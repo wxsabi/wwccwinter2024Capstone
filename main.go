@@ -14,6 +14,9 @@ func main() {
 	// This will handle the postings/items
 	http.HandleFunc("/item", handlers.ItemHandler)
 
+	// This will handle the users
+	http.HandleFunc("/user", handlers.UserHandler)
+
 	// This will start the web server
 	fmt.Println("Server is running on port: 8888") // this has to go before ListenAndServe
 	err := http.ListenAndServe(":8888", nil)

@@ -7,11 +7,7 @@ type User struct {
 	Name      string
 	LastName  string
 	Email     string
-	Password  string
+	Password  string // not sure if a string is ok for this
 	Photo     string // This will be a URL to a filesystem
 	CreatedAt time.Time
 }
-
-// func (u User) DisplayUsername() string {
-// 	return u.Username
-// }
