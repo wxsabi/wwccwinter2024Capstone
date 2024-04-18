@@ -1,5 +1,23 @@
 <hr>
 
+### Thu Apr 18 13:45:18 2024 -0700
+#### Author: Jay Cisneros <jaycisneros@jacm.io>
+#### commit: `8a1a7b6271c9c44d0076f1cf1266ff82867a8b1d`
+
+
+[Update]: Added functionality for http requests for ItemHandler
+
+Time spent: 20 hrs
+
+- added the line _ "github.com/go-sql-driver/mysql" to import the MySQL driver for Go.
+- As of this commit, ItemHandler can GET, POST, DELETE and PUT.
+- Added support to write to a MySQL database running in the same system
+- Most of the time was spent researching how to work with DB in Go
+- Next step is to create/update structs and DB manipulation for users
+
+
+<hr>
+
 ### Mon Mar 25 11:41:40 2024 -0700
 #### Author: Jay Cisneros <jaycisneros@jacm.io>
 #### commit: `59080b23d0c9ef2d9d70d8f233f7491a5c0a1adf`
