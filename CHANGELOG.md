@@ -1,5 +1,20 @@
 <hr>
 
+### Thu Apr 18 16:59:35 2024 -0700
+#### Author: Jay Cisneros <jaycisneros@jacm.io>
+#### commit: `239a8844e0a0637d5355b9fd2b69c977597088e0`
+
+
+[Updated]: Added support to userHandler.go for GET, POST, PUT, DELETE
+
+Time spent: 5 hrs
+
+- userHandler.go can now write to the database
+- A disctinction needs to be made between regulars users and admins... adding it to the todo list
+
+
+<hr>
+
 ### Thu Apr 18 15:42:00 2024 -0700
 #### Author: Jay Cisneros <jaycisneros@jacm.io>
 #### commit: `db81ee4187005967360f664b32d7517b76444c90`
