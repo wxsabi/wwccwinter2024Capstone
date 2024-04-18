@@ -1,13 +1,39 @@
 package main
 
 import (
+	"fmt"
+	"log"
+	"net/http"
+	"wwccwinter2024Capstone/handlers"
+)
+
+func main() {
+	// This will handle the homepage
+	http.HandleFunc("/index.html", handlers.IndexHandler)
+
+	// This will handle the postings/items
+	http.HandleFunc("/item", handlers.ItemHandler)
+
+	// This will start the web server
+	fmt.Println("Server is running on port: 8888") // this has to go before ListenAndServe
+	err := http.ListenAndServe(":8888", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+/*
+Old Code:
+
+
+import (
 	// "encoding/json"
 	"fmt"
 	// "html/template"
 	"log"
 	"net/http"
 
-	"github.com/wxsabi/wwccwinter2024Capstone/handlers"
+	"wwccwinter2024Capstone/handlers"
 	// "strconv"
 	// "sync"
 	// When ready, add this to mod.go "require golang.org/x/crypto v0.21.0"
@@ -17,22 +43,14 @@ import (
 
 )
 
-// type Item struct {
-// 	ID   int    `json:"id"`
-// 	Name string `json:"name"`
-// }
 
-// var (
-// 	mu    sync.Mutex
-// 	offerings = make([]offering.Offering, 0)
-// )
 
 func main() {
 	// This will handle the homepage
 	http.HandleFunc("/index.html", handlers.IndexHandler)
 
-	// This will handle the postings/offerings
-	// http.HandleFunc("/offering", offeringHandler)
+	// This will handle the postings/items
+	http.HandleFunc("/item", handlers.ItemHandler)
 
 	// This will handle the search results
 	// http.HandleFunc("/search", searchHandler)
@@ -78,11 +96,11 @@ func main() {
 
 
 
-// func offeringIDHandler(w http.ResponseWriter, r *http.Request) {
+// func itemIDHandler(w http.ResponseWriter, r *http.Request) {
 // 	idStr := r.URL.Path[len("/item/"):]
 // 	id, err := strconv.Atoi(idStr) // convert to int for use later
 // 	if err != nil {
-// 		http.Error(w, "This ID is soooo invalid it made Jeromy cry", http.StatusBadRequest)
+// 		http.Error(w, "Invalid ID", http.StatusBadRequest)
 // 		return
 // 	}
 //
@@ -112,9 +130,11 @@ func main() {
 // 		}
 // 		mu.Unlock()
 // 		if !found {
-// 			http.Error(w, "Jeromy DENIETH you this item... because it doesn't exist.", http.StatusNotFound)
+// 			http.Error(w, "Item doesn't exist", http.StatusNotFound)
 // 			return
 // 		}
 // 		json.NewEncoder(w).Encode(updatedItem)
 // 	}
 // }
+
+*/

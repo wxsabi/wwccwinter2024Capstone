@@ -3,12 +3,27 @@ package handlers
 import (
 	"html/template"
 	"net/http"
-	"github.com/wxsabi/wwccwinter2024Capstone/models"
+	"wwccwinter2024Capstone/models"
 )
 
+// IndexHandler is a function that handles requests to the index page.
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("index.html"))
+	// Parse the layout.html and index.html files. If there's an error, it will panic.
+	tmpl, err := template.ParseFiles("html/layout.html", "index.html")
+	if err != nil {
+		// handle error
+	}
+
+	// Lock the mutex to prevent other goroutines from accessing the data at the same time.
 	models.Mu.Lock()
-	tmpl.Execute(w, models.Items)
+
+	// Execute the template, writing the generated HTML to the http.ResponseWriter.
+	// The second parameter is the data we want to pass into the template.
+	err = tmpl.ExecuteTemplate(w, "layout", models.Items)
+	if err != nil {
+		// handle error
+	}
+
+	// Unlock the mutex to allow other goroutines to access the data.
 	models.Mu.Unlock()
 }
