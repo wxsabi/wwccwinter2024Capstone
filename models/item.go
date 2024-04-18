@@ -10,6 +10,6 @@ type Item struct {
 	ListedAt    time.Time
 }
 
-func (i Item) DisplayName() string {
-	return i.Name
-}
+// func (i Item) DisplayName() string {
+// 	return i.Name
+// }

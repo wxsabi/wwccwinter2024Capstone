@@ -1,0 +1,7 @@
+- Add image support for users 
+- Add image support for items
+- use bcrypt to let users log in
+- create a verbose mode for debugging with an admin toggle
+- figure out user permissions
+- Overall error handling
+- make db table fields mandatory (ID, email,. etc)

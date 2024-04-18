@@ -5,33 +5,32 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 	"wwccwinter2024Capstone/models"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var db *sql.DB
-
 func init() {
 	var err error
-	db, err = sql.Open("mysql", "root:Capstone@/")
+	models.Db, err = sql.Open("mysql", "root:Capstone@/")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	_, err = db.Exec(`CREATE DATABASE IF NOT EXISTS capDB`)
+	_, err = models.Db.Exec(`CREATE DATABASE IF NOT EXISTS capDB`)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	db.Close()
+	models.Db.Close()
 
-	db, err = sql.Open("mysql", "root:Capstone@/capDB")
+	models.Db, err = sql.Open("mysql", "root:Capstone@/capDB")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS Items(
+	_, err = models.Db.Exec(`CREATE TABLE IF NOT EXISTS Items(
 		ID INT PRIMARY KEY,
 		Name VARCHAR(255),
 		Description VARCHAR(255),
@@ -46,7 +45,7 @@ func init() {
 func ItemHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
-		rows, err := db.Query("SELECT * FROM Items")
+		rows, err := models.Db.Query("SELECT * FROM Items")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -56,11 +55,22 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 		var items []models.Item
 		for rows.Next() {
 			var item models.Item
-			err := rows.Scan(&item.ID, &item.Name, &item.Description, &item.Price, &item.ListedAt)
+			var listedAtStr string
+			err := rows.Scan(&item.ID, &item.Name, &item.Description, &item.Price, &listedAtStr)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
+
+			// Parse the ListedAt string into a time.Time
+			layout := "2006-01-02 15:04:05" // adjust this layout to match the format of your timestamp
+			listedAtTime, err := time.Parse(layout, listedAtStr)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			item.ListedAt = listedAtTime // assign the time.Time value directly
+
 			items = append(items, item)
 		}
 
@@ -70,7 +80,7 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 		var newItem models.Item //decode req body into item struct
 		json.NewDecoder(r.Body).Decode(&newItem)
 
-		_, err := db.Exec("INSERT INTO Items (ID, Name, Description, Price, ListedAt) VALUES (?, ?, ?, ?, ?)",
+		_, err := models.Db.Exec("INSERT INTO Items (ID, Name, Description, Price, ListedAt) VALUES (?, ?, ?, ?, ?)",
 			newItem.ID, newItem.Name, newItem.Description, newItem.Price, newItem.ListedAt)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -84,7 +94,7 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 		var idToDelete int
 		json.NewDecoder(r.Body).Decode(&idToDelete)
 
-		_, err := db.Exec("DELETE FROM Items WHERE ID = ?", idToDelete)
+		_, err := models.Db.Exec("DELETE FROM Items WHERE ID = ?", idToDelete)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -100,7 +110,7 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		_, err = db.Exec("UPDATE Items SET Name = ?, Description = ?, Price = ? WHERE ID = ?",
+		_, err = models.Db.Exec("UPDATE Items SET Name = ?, Description = ?, Price = ? WHERE ID = ?",
 			itemToUpdate.Name, itemToUpdate.Description, itemToUpdate.Price, itemToUpdate.ID)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
