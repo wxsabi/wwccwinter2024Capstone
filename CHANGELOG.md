@@ -1,5 +1,22 @@
 <hr>
 
+### Thu Apr 18 15:42:00 2024 -0700
+#### Author: Jay Cisneros <jaycisneros@jacm.io>
+#### commit: `db81ee4187005967360f664b32d7517b76444c90`
+
+
+[Added]: TO-DO.txt file to list things I need to do
+
+Time spent: N/A
+
+- added a todo list so I don't forget some features.
+- moved Db    *sql.DB to the variables file.
+- refactored models.Db in itemHandler
+- fixed a bug where the time of a item creation could not be parsed in itemHandler
+
+
+<hr>
+
 ### Thu Apr 18 13:45:18 2024 -0700
 #### Author: Jay Cisneros <jaycisneros@jacm.io>
 #### commit: `8a1a7b6271c9c44d0076f1cf1266ff82867a8b1d`
