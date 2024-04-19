@@ -1,5 +1,30 @@
 <hr>
 
+### Thu Apr 18 17:05:30 2024 -0700
+#### Author: Jay Cisneros <jaycisneros@jacm.io>
+#### commit: `98d680ffb6889d16037213ca844c0caa716fed67`
+
+
+[Added]: Created first draft for the Final paper with 7 sections
+
+Time spent: --
+
+- created first draft for final paper
+- Once items in the todo list are completed, the web interface will be created
+- Updated the to do list:
+	- Add image support for users
+	- Add image support for items
+	- hash the passwords
+	- use bcrypt to let users log in
+	- create a verbose mode for debugging with an admin toggle
+	- figure out user permissions
+	- Overall error handling
+	- make db table fields mandatory (ID, email,. etc)
+	- add a property to struct for regular users and admins.
+
+
+<hr>
+
 ### Thu Apr 18 16:59:35 2024 -0700
 #### Author: Jay Cisneros <jaycisneros@jacm.io>
 #### commit: `239a8844e0a0637d5355b9fd2b69c977597088e0`
