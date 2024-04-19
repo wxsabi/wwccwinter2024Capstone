@@ -6,3 +6,4 @@
 - figure out user permissions
 - Overall error handling
 - make db table fields mandatory (ID, email,. etc)
+- add a property to struct for regular users and admins.
