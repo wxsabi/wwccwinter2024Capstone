@@ -9,7 +9,3 @@ type Item struct {
 	Price       float64
 	ListedAt    time.Time
 }
-
-// func (i Item) DisplayName() string {
-// 	return i.Name
-// }

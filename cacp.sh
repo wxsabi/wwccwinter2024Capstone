@@ -81,10 +81,10 @@ echo "Deleting temporary files..."
 rm commit_msg.txt
 
 # Update remote changelog
-echo "Update remote repository changelog file"
-git add CHANGELOG.md
-git commit -m "[AUTOMATED]Update CHANGELOG.md"
-git push origin main
+# echo "Update remote repository changelog file"
+# git add CHANGELOG.md
+# git commit -m "[AUTOMATED]Update CHANGELOG.md"
+# git push origin main
 
 # Print success message
 echo "SUCCESS!"
