@@ -14,7 +14,7 @@ import (
 
 func init() {
 	var err error
-	models.Db, err = sql.Open("mysql", "root:Capstone@/")
+	models.Db, err = sql.Open("mysql", "capstone_user:capstone@/")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -26,21 +26,23 @@ func init() {
 
 	models.Db.Close()
 
-	models.Db, err = sql.Open("mysql", "root:Capstone@/capDB")
+	models.Db, err = sql.Open("mysql", "capstone_user:capstone@/capDB")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	_, err = models.Db.Exec(`
 CREATE TABLE IF NOT EXISTS Users(
-	ID INT AUTO_INCREMENT PRIMARY KEY,
-	Name VARCHAR(255),
-	LastName VARCHAR(255),
-	Email VARCHAR(255) UNIQUE,
-	Password VARCHAR(255),
-	Photo VARCHAR(255),
-	CreatedAt TIMESTAMP
-)`)
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    LastName VARCHAR(255),
+    Email VARCHAR(255) UNIQUE,
+    Password VARCHAR(255),
+    Photo VARCHAR(255),
+	CreatedAt TIMESTAMP DEFAULT (TIMESTAMP(NOW())),
+	IsAdmin BOOLEAN DEFAULT FALSE
+)
+`)
 
 	if err != nil {
 		log.Fatal(err)

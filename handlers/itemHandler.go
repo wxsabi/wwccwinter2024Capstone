@@ -13,7 +13,7 @@ import (
 
 func init() {
 	var err error
-	models.Db, err = sql.Open("mysql", "root:Capstone@/")
+	models.Db, err = sql.Open("mysql", "capstone_user:capstone@/")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,7 +25,7 @@ func init() {
 
 	models.Db.Close()
 
-	models.Db, err = sql.Open("mysql", "root:Capstone@/capDB")
+	models.Db, err = sql.Open("mysql", "capstone_user:capstone@/capDB")
 	if err != nil {
 		log.Fatal(err)
 	}
