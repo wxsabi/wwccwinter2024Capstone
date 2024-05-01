@@ -1,5 +1,19 @@
 <hr>
 
+### Thu Apr 25 10:27:53 2024 -0700
+#### Author: Joaquín Cisneros <kincho@jarvis.local>
+#### commit: `096f8ca226a2811bb4702b0c20605969d134bbd7`
+
+
+[Added]: Created admin role
+
+Time spent: 3 hrs
+
+- tested database
+
+
+<hr>
+
 ### Thu Apr 18 17:05:32 2024 -0700
 #### Author: Jay Cisneros <jaycisneros@jacm.io>
 #### commit: `921737e55c7e285841234f69cd01a8a4521aef4d`
