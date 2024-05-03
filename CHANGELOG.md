@@ -1,5 +1,22 @@
 <hr>
 
+### Thu May 2 18:55:55 2024 -0700
+#### Author: Joaquín Cisneros <kincho@jarvis.local>
+#### commit: `3ba1ad5f7e7bc9ba0e8b8b236586222e8653cb0a`
+
+
+[Refactored]: Removed repetitive InitDb() to models
+
+Time spent: 4 hrs
+
+- refactored the InitDb func
+- fixed bug that did not allow POST request to signup user
+
+NEXT: create login session and cookies
+
+
+<hr>
+
 ### Tue Apr 30 18:51:02 2024 -0700
 #### Author: Joaquín Cisneros <kincho@jarvis.local>
 #### commit: `78232b880a7e627f71bb49a50f9d6735e2129cf7`
