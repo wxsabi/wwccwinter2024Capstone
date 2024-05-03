@@ -1,5 +1,19 @@
 <hr>
 
+### Thu May 2 18:59:52 2024 -0700
+#### Author: Joaquín Cisneros <kincho@jarvis.local>
+#### commit: `6fa94816df0a8f3b891a37d14e5250c24d0b7753`
+
+
+[Added]: Started adding screenshots of AI queries
+
+Time spent: --
+
+- created AI Qeries folder
+
+
+<hr>
+
 ### Thu May 2 18:55:55 2024 -0700
 #### Author: Joaquín Cisneros <kincho@jarvis.local>
 #### commit: `3ba1ad5f7e7bc9ba0e8b8b236586222e8653cb0a`
