@@ -1,5 +1,20 @@
 <hr>
 
+### Tue Apr 30 18:51:02 2024 -0700
+#### Author: Joaquín Cisneros <kincho@jarvis.local>
+#### commit: `78232b880a7e627f71bb49a50f9d6735e2129cf7`
+
+
+[Added]: Added User signup functinality
+
+Time spent: 4 hrs
+
+- Wrote signupHandler.go that allows user to log in and uses bcrypt to hash the password.
+- Will write signinHandler.go later
+
+
+<hr>
+
 ### Thu Apr 25 10:27:53 2024 -0700
 #### Author: Joaquín Cisneros <kincho@jarvis.local>
 #### commit: `096f8ca226a2811bb4702b0c20605969d134bbd7`

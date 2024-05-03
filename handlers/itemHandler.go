@@ -1,46 +1,15 @@
 package handlers
 
 import (
-	"database/sql"
+	// "database/sql"
 	"encoding/json"
-	"log"
+	// "log"
 	"net/http"
 	"time"
 	"wwccwinter2024Capstone/models"
 
 	_ "github.com/go-sql-driver/mysql"
 )
-
-func init() {
-	var err error
-	models.Db, err = sql.Open("mysql", "capstone_user:capstone@/")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	_, err = models.Db.Exec(`CREATE DATABASE IF NOT EXISTS capDB`)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	models.Db.Close()
-
-	models.Db, err = sql.Open("mysql", "capstone_user:capstone@/ capDB")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	_, err = models.Db.Exec(`CREATE TABLE IF NOT EXISTS Items(
-		ID INT PRIMARY KEY,
-		Name VARCHAR(255),
-		Description VARCHAR(255),
-		Price DECIMAL(10, 2),
-		ListedAt DATETIME
-	)`)
-	if err != nil {
-		log.Fatal(err)
-	}
-}
 
 func ItemHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -77,6 +46,7 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(map[string][]models.Item{"items": items})
 
 	case http.MethodPost:
+		models.InitDb()
 		var newItem models.Item //decode req body into item struct
 		json.NewDecoder(r.Body).Decode(&newItem)
 

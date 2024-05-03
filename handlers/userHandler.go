@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"database/sql"
+	// "database/sql"
 	"encoding/json"
-	"log"
+	// "log"
 	"net/http"
 	"time"
 
@@ -11,43 +11,6 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 )
-
-func init() {
-	var err error
-	models.Db, err = sql.Open("mysql", "capstone_user:capstone@/")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	_, err = models.Db.Exec(`CREATE DATABASE IF NOT EXISTS capDB`)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	models.Db.Close()
-
-	models.Db, err = sql.Open("mysql", "capstone_user:capstone@/capDB")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	_, err = models.Db.Exec(`
-CREATE TABLE IF NOT EXISTS Users(
-    ID INT AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(255),
-    LastName VARCHAR(255),
-    Email VARCHAR(255) UNIQUE,
-    Password VARCHAR(255),
-    Photo VARCHAR(255),
-	CreatedAt TIMESTAMP,
-	IsAdmin BOOLEAN DEFAULT FALSE
-)
-`)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-}
 
 func UserHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -84,6 +47,7 @@ func UserHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(map[string][]models.User{"users": users})
 
 	case http.MethodPost:
+		models.InitDb()
 		var user models.User
 		err := json.NewDecoder(r.Body).Decode(&user)
 		if err != nil {

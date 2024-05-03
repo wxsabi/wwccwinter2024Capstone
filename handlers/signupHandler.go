@@ -17,6 +17,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	models.InitDb() // Initialize database
 	var user models.User
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
