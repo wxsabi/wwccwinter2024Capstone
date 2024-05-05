@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"sync"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -16,6 +17,15 @@ var (
 	Items = make([]Item, 0)
 	Db    *sql.DB
 )
+
+// Map to store session information (for demonstration purposes)
+var Sessions = map[string]Session{}
+
+// Session struct to hold session data
+type Session struct {
+	Username string
+	Expiry   time.Time
+}
 
 func InitDb() {
 	var err error
@@ -42,11 +52,16 @@ func InitDb() {
 		Name VARCHAR(255),
 		LastName VARCHAR(255),
 		Email VARCHAR(255) UNIQUE,
-		Password VARCHAR(255),
+		Password VARCHAR(255), 
 		Photo VARCHAR(255),
 		CreatedAt TIMESTAMP,
-		IsAdmin BOOLEAN DEFAULT FALSE
+		IsAdmin BOOLEAN DEFAULT FALSE,
+		SessionID VARCHAR(255), 
+		LastLogin TIMESTAMP,    
+		IsLoggedIn BOOLEAN DEFAULT FALSE, 
+		RememberToken VARCHAR(255) 
 	);
+	
 	`)
 
 	if err != nil {

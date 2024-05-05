@@ -34,9 +34,9 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Insert the user into the database
 	_, err = models.Db.Exec(`
-        INSERT INTO Users (Name, LastName, Email, Password, Photo, CreatedAt)
-        VALUES (?, ?, ?, ?, ?, ?)
-    `, user.Name, user.LastName, user.Email, hashedPassword, user.Photo, time.Now())
+        INSERT INTO Users (Name, LastName, Email, Password, Photo, CreatedAt, IsAdmin, SessionID, LastLogin, IsLoggedIn, RememberToken)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, user.Name, user.LastName, user.Email, hashedPassword, user.Photo, time.Now(), user.IsAdmin, user.SessionID, user.LastLogin, user.IsLoggedIn, user.RememberToken)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
