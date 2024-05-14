@@ -58,7 +58,7 @@ func UserHandler(w http.ResponseWriter, r *http.Request) {
 		_, err = models.Db.Exec(`
         INSERT INTO Users (Name, LastName, Email, Password, Photo, CreatedAt, IsAdmin, SessionID, LastLogin, IsLoggedIn, RememberToken)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, user.Name, user.LastName, user.Email, hashedPassword, user.Photo, time.Now(), user.IsAdmin, user.SessionID, user.LastLogin, user.IsLoggedIn, user.RememberToken)
+    `, user.Name, user.LastName, user.Email, user.Password, user.Photo, time.Now(), user.IsAdmin, user.SessionID, user.LastLogin, user.IsLoggedIn, user.RememberToken)
 
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -99,7 +99,7 @@ func UserHandler(w http.ResponseWriter, r *http.Request) {
 		_, err = models.Db.Exec(`
         INSERT INTO Users (Name, LastName, Email, Password, Photo, CreatedAt, IsAdmin, SessionID, LastLogin, IsLoggedIn, RememberToken)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, user.Name, user.LastName, user.Email, hashedPassword, user.Photo, time.Now(), user.IsAdmin, user.SessionID, user.LastLogin, user.IsLoggedIn, user.RememberToken)
+    `, user.Name, user.LastName, user.Email, user.Password, user.Photo, time.Now(), user.IsAdmin, user.SessionID, user.LastLogin, user.IsLoggedIn, user.RememberToken)
 
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)

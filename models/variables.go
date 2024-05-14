@@ -1,7 +1,9 @@
 package models
 
 import (
+	"crypto/rand"
 	"database/sql"
+	"encoding/base64"
 	"log"
 	"sync"
 	"time"
@@ -23,8 +25,8 @@ var Sessions = map[string]Session{}
 
 // Session struct to hold session data
 type Session struct {
-	Username string
-	Expiry   time.Time
+	Email  string
+	Expiry time.Time
 }
 
 func InitDb() {
@@ -34,14 +36,14 @@ func InitDb() {
 		log.Fatal(err)
 	}
 
-	_, err = Db.Exec(`CREATE DATABASE IF NOT EXISTS capDB`)
+	_, err = Db.Exec(`CREATE DATABASE IF NOT EXISTS capstone_database`)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	Db.Close()
 
-	Db, err = sql.Open("mysql", "capstone_user:capstone@/capDB")
+	Db, err = sql.Open("mysql", "capstone_user:capstone@/capstone_database")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -56,10 +58,6 @@ func InitDb() {
 		Photo VARCHAR(255),
 		CreatedAt TIMESTAMP,
 		IsAdmin BOOLEAN DEFAULT FALSE,
-		SessionID VARCHAR(255), 
-		LastLogin TIMESTAMP,    
-		IsLoggedIn BOOLEAN DEFAULT FALSE, 
-		RememberToken VARCHAR(255) 
 	);
 	
 	`)
@@ -81,4 +79,30 @@ func InitDb() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	_, err = Db.Exec(`
+	CREATE TABLE IF NOT EXISTS Sessions (
+		SessionID VARCHAR(255) PRIMARY KEY,
+		UserID INT,
+		ExpiresAt TIMESTAMP,
+		LastLogin TIMESTAMP,    
+		IsLoggedIn BOOLEAN DEFAULT FALSE, 
+		RememberToken VARCHAR(255)
+		FOREIGN KEY(UserID) REFERENCES Users(ID)
+	);
+	`)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+// generateSessionToken generates a new session token
+func GenerateSessionToken() (string, error) {
+	b := make([]byte, 32)
+	_, err := rand.Read(b)
+	if err != nil {
+		return "", err
+	}
+	return base64.URLEncoding.EncodeToString(b), nil
 }

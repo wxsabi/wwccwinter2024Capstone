@@ -14,12 +14,15 @@ import (
 func ItemHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
+		// This implicitly sets the value of rows to be the
+		// rows from the items table of the database
+		// if there are none, an error will be thrown.
 		rows, err := models.Db.Query("SELECT * FROM Items")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		defer rows.Close()
+		defer rows.Close() // This closes the rows once the function is done.
 
 		var items []models.Item
 		for rows.Next() {
@@ -32,7 +35,7 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 			// Parse the ListedAt string into a time.Time
-			layout := "2006-01-02 15:04:05" // adjust this layout to match the format of your timestamp
+			layout := "2006-01-02 15:04:05" // adjust this layout to match the format of timestamp
 			listedAtTime, err := time.Parse(layout, listedAtStr)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)

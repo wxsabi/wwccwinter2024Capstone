@@ -36,15 +36,19 @@ func SigninHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("User %s logged in successfully", email)
 
 	// Generate a new session token (use a UUID or other secure method)
-	sessionToken := "your_generated_session_token"
+	sessionToken, err := models.GenerateSessionToken()
+	if err != nil {
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
 
-	// Set the expiry time for the session (e.g., 120 seconds from now)
-	expiresAt := time.Now().Add(120 * time.Second)
+	// Set the expiry time for the session to 30 days
+	expiresAt := time.Now().Add(30 * 24 * time.Hour)
 
-	// Store the session token (for demonstration purposes)
+	// Store the session token
 	models.Sessions[sessionToken] = models.Session{
-		Username: "user1", // Replace with the actual username
-		Expiry:   expiresAt,
+		Email:  email, // Use the email as the username
+		Expiry: expiresAt,
 	}
 
 	// Create a new cookie with the session token

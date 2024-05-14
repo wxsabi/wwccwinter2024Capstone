@@ -1,5 +1,24 @@
 <hr>
 
+### Sat May 4 17:37:43 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `b73a21d48a740d68d3fe8e7455479ed7c63dee9f`
+
+
+[Update]: updated database for users
+
+Time spent: 4hrs
+
+- updated users table to include more fields that were needed
+- wrote singin handler
+- started implementing user session routine
+- tested db to make sure new table works
+
+NEXT: finish signin handler
+
+
+<hr>
+
 ### Thu May 2 18:59:52 2024 -0700
 #### Author: Joaquín Cisneros <kincho@jarvis.local>
 #### commit: `6fa94816df0a8f3b891a37d14e5250c24d0b7753`

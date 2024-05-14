@@ -25,6 +25,14 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Check if email already exists
+	var existingUser models.User
+	err = models.Db.QueryRow("SELECT * FROM Users WHERE Email = ?", user.Email).Scan(&existingUser)
+	if err == nil {
+		http.Error(w, "Email already exists", http.StatusBadRequest)
+		return
+	}
+
 	// Hash the user's password using bcrypt
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
@@ -32,11 +40,17 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Initializing -- Set CreatedAt and LastLogin to the current time
+	user.CreatedAt = time.Now()
+	user.LastLogin = time.Now()
+	user.RememberToken = "0"
+	user.SessionID = "0"
+
 	// Insert the user into the database
 	_, err = models.Db.Exec(`
         INSERT INTO Users (Name, LastName, Email, Password, Photo, CreatedAt, IsAdmin, SessionID, LastLogin, IsLoggedIn, RememberToken)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, user.Name, user.LastName, user.Email, hashedPassword, user.Photo, time.Now(), user.IsAdmin, user.SessionID, user.LastLogin, user.IsLoggedIn, user.RememberToken)
+    `, user.Name, user.LastName, user.Email, hashedPassword, user.Photo, user.CreatedAt, user.IsAdmin, user.SessionID, user.LastLogin, user.IsLoggedIn, user.RememberToken)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
