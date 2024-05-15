@@ -1,5 +1,21 @@
 <hr>
 
+### Wed May 15 12:37:39 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `e94209f96055994f26484e513d471dc07cdda177`
+
+
+[Fixed]: Fixed bugs in user handler
+
+Time spent: 2 hrs
+
+- Fixed bugs in user handler to initDB()
+- Fixed PUT method in userHandler.go
+- created curl_commands.txt to keep commands handy for http requests.
+
+
+<hr>
+
 ### Mon May 13 20:34:39 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `19fd5506f2cc5b28a78e316938f5a86c9d087fc4`

@@ -11,8 +11,17 @@ import (
 )
 
 func SigninHandler(w http.ResponseWriter, r *http.Request) {
+	defer func() {
+		if r := recover(); r != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			// Log the panic
+			log.Printf("Panic occurred: %v", r)
+		}
+	}()
 	email := r.FormValue("email")
 	inputPassword := r.FormValue("password")
+
+	models.InitDb()
 
 	// Retrieve user data from the database based on the provided email
 	query := "SELECT password FROM users WHERE email = ?"
