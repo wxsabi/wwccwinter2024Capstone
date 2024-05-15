@@ -57,7 +57,7 @@ func InitDb() {
 		Password VARCHAR(255), 
 		Photo VARCHAR(255),
 		CreatedAt TIMESTAMP,
-		IsAdmin BOOLEAN DEFAULT FALSE,
+		IsAdmin BOOLEAN DEFAULT FALSE
 	);
 	
 	`)
@@ -87,7 +87,7 @@ func InitDb() {
 		ExpiresAt TIMESTAMP,
 		LastLogin TIMESTAMP,    
 		IsLoggedIn BOOLEAN DEFAULT FALSE, 
-		RememberToken VARCHAR(255)
+		RememberToken BOOLEAN DEFAULT FALSE,
 		FOREIGN KEY(UserID) REFERENCES Users(ID)
 	);
 	`)

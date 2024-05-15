@@ -1,5 +1,26 @@
 <hr>
 
+### Mon May 13 20:34:39 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `19fd5506f2cc5b28a78e316938f5a86c9d087fc4`
+
+
+[Update]: fixed bugs in signup and sign in
+
+Time spent: 8hrs
+
+- Made sure to fix bugs and test signup and sign in
+- refactored db to make sure sessions are handled in their own table
+- fixed bug parsing Time.Now using JSON
+- can now generate session token and remember token and browser cookie
+
+NEXT:
+- Need to refactor code in signin and signup to accomodate the new database structure
+- add code for logout
+
+
+<hr>
+
 ### Sat May 4 17:37:43 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `b73a21d48a740d68d3fe8e7455479ed7c63dee9f`

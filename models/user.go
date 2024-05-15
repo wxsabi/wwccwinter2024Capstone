@@ -14,5 +14,5 @@ type User struct {
 	SessionID     string
 	LastLogin     time.Time
 	IsLoggedIn    bool
-	RememberToken string
+	RememberToken bool
 }

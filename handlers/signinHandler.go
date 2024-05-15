@@ -60,6 +60,30 @@ func SigninHandler(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true, // Prevent JavaScript access to the cookie
 	}
 
+	// Initializing -- Set CreatedAt and LastLogin to the current time
+	var user models.User
+
+	// Retrieve the user's ID from the database
+	row := models.Db.QueryRow("SELECT ID FROM Users WHERE Email = ?", email)
+	err = row.Scan(&user.ID)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// This is where the code to handle the "Remember me" checkbox will go
+
+	// Insert the session into the database
+	_, err = models.Db.Exec(`
+	INSERT INTO Sessions (UserID, SessionID, ExpiresAt, LastLogin, IsLoggedIn, RememberToken)
+	VALUES (?, ?, ?, ?, ?, ?)
+	`, user.ID, sessionToken, expiresAt, time.Now(), true, true)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	http.SetCookie(w, &cookie)
 
 	http.Redirect(w, r, "/welcome", http.StatusSeeOther)

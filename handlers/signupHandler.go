@@ -42,15 +42,12 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Initializing -- Set CreatedAt and LastLogin to the current time
 	user.CreatedAt = time.Now()
-	user.LastLogin = time.Now()
-	user.RememberToken = "0"
-	user.SessionID = "0"
 
 	// Insert the user into the database
 	_, err = models.Db.Exec(`
-        INSERT INTO Users (Name, LastName, Email, Password, Photo, CreatedAt, IsAdmin, SessionID, LastLogin, IsLoggedIn, RememberToken)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, user.Name, user.LastName, user.Email, hashedPassword, user.Photo, user.CreatedAt, user.IsAdmin, user.SessionID, user.LastLogin, user.IsLoggedIn, user.RememberToken)
+        INSERT INTO Users (Name, LastName, Email, Password, Photo, CreatedAt, IsAdmin)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    `, user.Name, user.LastName, user.Email, hashedPassword, user.Photo, user.CreatedAt, user.IsAdmin)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
