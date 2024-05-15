@@ -1,18 +1,24 @@
 package handlers
 
 import (
-	// "database/sql"
 	"encoding/json"
-	// "log"
+	"log"
 	"net/http"
 	"time"
-
 	"wwccwinter2024Capstone/models"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func UserHandler(w http.ResponseWriter, r *http.Request) {
+	defer func() {
+		if r := recover(); r != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			// Log the panic
+			log.Printf("Panic occurred: %v", r)
+		}
+	}()
+	models.InitDb() // Initialize database
 	switch r.Method {
 	case http.MethodGet:
 		rows, err := models.Db.Query("SELECT * FROM Users")
@@ -47,7 +53,6 @@ func UserHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(map[string][]models.User{"users": users})
 
 	case http.MethodPost:
-		models.InitDb()
 		var user models.User
 		err := json.NewDecoder(r.Body).Decode(&user)
 		if err != nil {
@@ -56,9 +61,9 @@ func UserHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		_, err = models.Db.Exec(`
-        INSERT INTO Users (Name, LastName, Email, Password, Photo, CreatedAt, IsAdmin, SessionID, LastLogin, IsLoggedIn, RememberToken)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, user.Name, user.LastName, user.Email, user.Password, user.Photo, time.Now(), user.IsAdmin, user.SessionID, user.LastLogin, user.IsLoggedIn, user.RememberToken)
+        INSERT INTO Users (Name, LastName, Email, Password, Photo, CreatedAt, IsAdmin)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    `, user.Name, user.LastName, user.Email, user.Password, user.Photo, time.Now(), user.IsAdmin)
 
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -97,9 +102,10 @@ func UserHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		_, err = models.Db.Exec(`
-        INSERT INTO Users (Name, LastName, Email, Password, Photo, CreatedAt, IsAdmin, SessionID, LastLogin, IsLoggedIn, RememberToken)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, user.Name, user.LastName, user.Email, user.Password, user.Photo, time.Now(), user.IsAdmin, user.SessionID, user.LastLogin, user.IsLoggedIn, user.RememberToken)
+		UPDATE Users
+		SET Name=?, LastName=?, Email=?, Photo=?
+		WHERE ID=?
+	`, user.Name, user.LastName, user.Email, user.Photo, user.ID)
 
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
