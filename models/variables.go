@@ -20,7 +20,7 @@ var (
 	Db    *sql.DB
 )
 
-// Map to store session information (for demonstration purposes)
+// Map to store session information
 var Sessions = map[string]Session{}
 
 // Session struct to hold session data
@@ -81,11 +81,13 @@ func InitDb() {
 
 	_, err = Db.Exec(`
 	CREATE TABLE IF NOT EXISTS Items (
-		ID INT PRIMARY KEY,
+		ItemID INT PRIMARY KEY,
+		UserID INT,
 		Name VARCHAR(255),
 		Description VARCHAR(255),
 		Price DECIMAL(10, 2),
-		ListedAt DATETIME
+		ListedAt DATETIME,
+		FOREIGN KEY(UserID) REFERENCES Users(ID)
 	);
 	`)
 	if err != nil {
@@ -93,11 +95,11 @@ func InitDb() {
 	}
 
 	_, err = Db.Exec(`
-	CREATE TABLE ItemPhotos (
-		ID INT PRIMARY KEY AUTO_INCREMENT,
+	CREATE TABLE IF NOT EXISTS ItemPhotos (
+		PhotoID INT PRIMARY KEY AUTO_INCREMENT,
 		ItemID INT,
 		PhotoURL VARCHAR(255),
-		FOREIGN KEY (ItemID) REFERENCES Items(ID)
+		FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
 	);
 	`)
 	if err != nil {

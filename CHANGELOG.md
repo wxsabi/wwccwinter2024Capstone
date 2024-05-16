@@ -1,5 +1,19 @@
 <hr>
 
+### Wed May 15 22:25:11 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `76329609129e4cbc91d637e4c0225aac07bced0f`
+
+
+[Addition]: Added Photos table to the InitDb() function
+
+Time spent: 1hr
+
+- Added the photos table to the initdb function
+
+
+<hr>
+
 ### Wed May 15 16:10:55 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `0e547e275684657fb6475467d959f5a785a391bf`

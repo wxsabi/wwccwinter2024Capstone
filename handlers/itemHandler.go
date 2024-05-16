@@ -29,7 +29,7 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 		for rows.Next() {
 			var item models.Item
 			var listedAtStr string
-			err := rows.Scan(&item.ID, &item.Name, &item.Description, &item.Price, &listedAtStr)
+			err := rows.Scan(&item.ItemID, &item.UserID, &item.Name, &item.Description, &item.Price, &listedAtStr)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
@@ -53,8 +53,8 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 		var newItem models.Item //decode req body into item struct
 		json.NewDecoder(r.Body).Decode(&newItem)
 
-		_, err := models.Db.Exec("INSERT INTO Items (ID, Name, Description, Price, ListedAt) VALUES (?, ?, ?, ?, ?)",
-			newItem.ID, newItem.Name, newItem.Description, newItem.Price, newItem.ListedAt)
+		_, err := models.Db.Exec("INSERT INTO Items (ItemID, UserID, Name, Description, Price, ListedAt) VALUES (?, ?, ?, ?, ?, ?)",
+			newItem.ItemID, newItem.UserID, newItem.Name, newItem.Description, newItem.Price, newItem.ListedAt)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -84,7 +84,7 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		_, err = models.Db.Exec("UPDATE Items SET Name = ?, Description = ?, Price = ? WHERE ID = ?",
-			itemToUpdate.Name, itemToUpdate.Description, itemToUpdate.Price, itemToUpdate.ID)
+			itemToUpdate.Name, itemToUpdate.Description, itemToUpdate.Price, itemToUpdate.ItemID)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

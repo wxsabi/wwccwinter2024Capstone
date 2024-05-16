@@ -3,7 +3,8 @@ package models
 import "time"
 
 type Item struct {
-	ID          int
+	ItemID      int
+	UserID      int
 	Name        string
 	Description string
 	Price       float64
