@@ -59,23 +59,7 @@ func InitDb() {
 		CreatedAt TIMESTAMP,
 		IsAdmin BOOLEAN DEFAULT FALSE
 	);
-	
 	`)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	_, err = Db.Exec(`
-	CREATE TABLE IF NOT EXISTS Items (
-		ID INT PRIMARY KEY,
-		Name VARCHAR(255),
-		Description VARCHAR(255),
-		Price DECIMAL(10, 2),
-		ListedAt DATETIME
-	);
-	`)
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -91,7 +75,31 @@ func InitDb() {
 		FOREIGN KEY(UserID) REFERENCES Users(ID)
 	);
 	`)
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	_, err = Db.Exec(`
+	CREATE TABLE IF NOT EXISTS Items (
+		ID INT PRIMARY KEY,
+		Name VARCHAR(255),
+		Description VARCHAR(255),
+		Price DECIMAL(10, 2),
+		ListedAt DATETIME
+	);
+	`)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = Db.Exec(`
+	CREATE TABLE ItemPhotos (
+		ID INT PRIMARY KEY AUTO_INCREMENT,
+		ItemID INT,
+		PhotoURL VARCHAR(255),
+		FOREIGN KEY (ItemID) REFERENCES Items(ID)
+	);
+	`)
 	if err != nil {
 		log.Fatal(err)
 	}

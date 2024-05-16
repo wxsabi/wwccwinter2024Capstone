@@ -1,5 +1,21 @@
 <hr>
 
+### Wed May 15 16:10:55 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `0e547e275684657fb6475467d959f5a785a391bf`
+
+
+[Fixed]: Fixed but where signup handler panicked
+
+Time spent: 3 hrs
+
+- Fixed signupHandler.go was missing models.InitDB()
+- Wrote logoutHanderl.go but I can't test it until the web interface is built
+  because the logic is cookie based.
+
+
+<hr>
+
 ### Wed May 15 12:37:39 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `e94209f96055994f26484e513d471dc07cdda177`

@@ -12,6 +12,7 @@ import (
 )
 
 func ItemHandler(w http.ResponseWriter, r *http.Request) {
+	models.InitDb() // Initialize database
 	switch r.Method {
 	case http.MethodGet:
 		// This implicitly sets the value of rows to be the
@@ -49,7 +50,6 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(map[string][]models.Item{"items": items})
 
 	case http.MethodPost:
-		models.InitDb()
 		var newItem models.Item //decode req body into item struct
 		json.NewDecoder(r.Body).Decode(&newItem)
 
