@@ -54,7 +54,7 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewDecoder(r.Body).Decode(&newItem)
 
 		_, err := models.Db.Exec("INSERT INTO Items (ItemID, UserID, Name, Description, Price, ListedAt) VALUES (?, ?, ?, ?, ?, ?)",
-			newItem.ItemID, newItem.UserID, newItem.Name, newItem.Description, newItem.Price, newItem.ListedAt)
+			newItem.ItemID, newItem.UserID, newItem.Name, newItem.Description, newItem.Price, time.Now())
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

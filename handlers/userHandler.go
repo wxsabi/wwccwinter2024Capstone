@@ -79,14 +79,39 @@ func UserHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
+
+		}
+		_, err = models.Db.Exec(`
+			DELETE FROM ItemPhotos WHERE ItemID IN (
+				SELECT ItemID FROM Items WHERE UserID = ?
+			)
+		`, user.ID)
+		if err != nil {
+			log.Fatal(err)
+			return
+		}
+
+		_, err = models.Db.Exec(`
+			DELETE FROM Items WHERE UserID = ?
+		`, user.ID)
+		if err != nil {
+			log.Fatal(err)
+			return
+		}
+
+		_, err = models.Db.Exec(`
+			DELETE FROM Sessions WHERE UserID = ?
+		`, user.ID)
+		if err != nil {
+			log.Fatal(err)
+			return
 		}
 
 		_, err = models.Db.Exec(`
 			DELETE FROM Users WHERE ID = ?
 		`, user.ID)
-
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			log.Fatal(err)
 			return
 		}
 

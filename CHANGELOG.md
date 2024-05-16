@@ -1,5 +1,19 @@
 <hr>
 
+### Thu May 16 12:11:54 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `83a1771394357280ccf2b9abb0ff00dcca55d67c`
+
+
+[Add]: Added ItemPhotos db table
+
+Time spent: 2 hrs
+
+- Create an ItemPhotos table to show photos of the items based on ItemID => Users(ID)
+
+
+<hr>
+
 ### Wed May 15 22:25:11 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `76329609129e4cbc91d637e4c0225aac07bced0f`
