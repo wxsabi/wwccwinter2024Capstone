@@ -1,17 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>College Store</title>
-</head>
-<body>
-    <h1>Welcome to College Store</h1>
-    <ul>
-        {{range .}}
-            <li>ID: {{.ID}}, Item: {{.Name}}</li>
-        {{end}}
-    </ul>
-    <footer>
-        <p>JaySoft - All Rights Reserved.</p>
-    </footer>
-</body>
-</html>
+{{define "indexcontent"}}
+<div>
+    Something representative of the title? logged in : logged out
+</div>
+<div>
+    actual content? logged in : logged out<br><br>
+    <form>
+        <!-- Your form fields go here -->
+        <div class="row justify-content-center mb-3">
+            <label for="name" class="col-sm-2 col-form-label">Name:</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" class="form-control">
+        </div>
+        <div class="row justify-content-center mb-3">
+            <label for="email" class="col-sm-2 col-form-label">Email:</label>
+            <input type="email" id="email" name="email" placeholder="john.doe@example.com" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{{end}}

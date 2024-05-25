@@ -1,5 +1,19 @@
 <hr>
 
+### Thu May 16 15:11:18 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `d03f2d608ea71b8453ede36933fc3232850c1a6e`
+
+
+[Fixed]: Fixed bug for DELETE User
+
+Time spent: 3 hrs
+
+- Fixed bug where a User could not be deleted due to foreign key constraints
+
+
+<hr>
+
 ### Thu May 16 12:11:54 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `83a1771394357280ccf2b9abb0ff00dcca55d67c`

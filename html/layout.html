@@ -7,18 +7,40 @@
 <body>
     <header>
         <!-- Header content goes here -->
+        This is a Header. Logo and maybe login status
     </header>
 
     <nav>
         <!-- Navigation content goes here -->
+        This is a Nav. No clue what goes here
     </nav>
 
     <main>
-        {{template "content" .}}
+        {{template "indexcontent" .}}<br><br><br><br>
+
+        <div class="container my-5 py-4 text-center">
+            <form>
+                <!-- Your form fields go here -->
+                <div class="row justify-content-center mb-3">
+                    <label for="name" class="col-sm-2 col-form-label">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe" class="form-control">
+                </div>
+                <div class="row justify-content-center mb-3">
+                    <label for="email" class="col-sm-2 col-form-label">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="john.doe@example.com" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </main>
 
+    <aside>
+        Aside with the side panel
+    </aside>
+
     <footer>
-        <!-- Footer content goes here -->
+        <p>JaySoft - All Rights Reserved.</p>
     </footer>
 </body>
 </html>
+ 

@@ -87,6 +87,7 @@ func InitDb() {
 		Description VARCHAR(255),
 		Price DECIMAL(10, 2),
 		ListedAt DATETIME,
+		IsSold BOOLEAN DEFAULT FALSE,
 		FOREIGN KEY(UserID) REFERENCES Users(ID)
 	);
 	`)
@@ -115,4 +116,8 @@ func GenerateSessionToken() (string, error) {
 		return "", err
 	}
 	return base64.URLEncoding.EncodeToString(b), nil
+}
+
+type PageData struct {
+	Title string
 }

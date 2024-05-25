@@ -11,7 +11,11 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse the layout.html and index.html files. If there's an error, it will panic.
 	tmpl, err := template.ParseFiles("html/layout.html", "index.html")
 	if err != nil {
-		// handle error
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	data := models.PageData{
+		Title: "Britl!",
 	}
 
 	// Lock the mutex to prevent other goroutines from accessing the data at the same time.
@@ -19,9 +23,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Execute the template, writing the generated HTML to the http.ResponseWriter.
 	// The second parameter is the data we want to pass into the template.
-	err = tmpl.ExecuteTemplate(w, "layout", models.Items)
+	err = tmpl.Execute(w, data)
 	if err != nil {
-		// handle error
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
 	// Unlock the mutex to allow other goroutines to access the data.

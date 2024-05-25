@@ -24,11 +24,14 @@ func main() {
 	http.HandleFunc("/signin", handlers.SigninHandler)
 
 	// This will start the web server
-	fmt.Println("Server is running on port: 8888") // this has to go before ListenAndServe
-	err := http.ListenAndServe(":8888", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
+	go func() {
+		err := http.ListenAndServe(":8888", nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+	fmt.Println("Server is running on port: 8888")
+	select {}
 }
 
 /*
