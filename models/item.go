@@ -9,4 +9,5 @@ type Item struct {
 	Description string
 	Price       float64
 	ListedAt    time.Time
+	IsSold      bool
 }

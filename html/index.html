@@ -1,0 +1,50 @@
+{{define "tmpl"}}
+
+<!-- This is the homepage of the marketplace app.   -->
+<!-- JavaScript to check for cookie -->
+<script>
+    function checkCookie() {
+        var sessionToken = document.cookie.match(/session_token=([^;]*)/);
+        if (sessionToken) {
+            // Send AJAX request to backend to verify the cookie
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/verify-cookie/' + sessionToken[1], true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // User is logged in, display their posted items
+                    document.getElementById('user-items').style.display = 'block';
+                } else {
+                    // User is not logged in, display all posted items
+                    document.getElementById('all-items').style.display = 'block';
+                }
+            };
+            xhr.send();
+        } else {
+            // User is not logged in, display all posted items
+            document.getElementById('all-items').style.display = 'block';
+        }
+    }
+
+    checkCookie();
+
+</script>
+
+<!-- if the user is logged in, meaning, if there's a cookie found by the web server 
+    written in golang, then a list of items that the user has posted from newest 
+    to oldest will be displayed if any.-->
+<div id="user-items" style="display: none;">
+    <h2>Your Posted Items:</h2>
+    <!-- Display list of user's posted items here -->
+</div>
+
+<!-- if the user is not logged in, then this will display a list of items posted for sale
+by all users based on the time they were posted at from newest to oldest. -->
+<div id="all-items" style="display: none;">
+    <h2>Posted Items:</h2>
+    <!-- Display list of all posted items here -->
+</div>
+
+
+
+
+{{end}}

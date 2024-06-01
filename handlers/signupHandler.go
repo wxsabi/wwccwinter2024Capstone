@@ -12,10 +12,6 @@ import (
 )
 
 func SignupHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid method", http.StatusMethodNotAllowed)
-		return
-	}
 
 	models.InitDb() // Initialize database
 	var user models.User

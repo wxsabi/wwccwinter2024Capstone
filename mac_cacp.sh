@@ -46,3 +46,6 @@ rm commit_msg.txt
 
 # Commit changes with the new message
 git commit -m "$commit_message"
+
+# Push changes to main branch
+git push origin main

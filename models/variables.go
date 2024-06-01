@@ -29,6 +29,10 @@ type Session struct {
 	Expiry time.Time
 }
 
+type TemplateHandler struct {
+	Filename string
+}
+
 func InitDb() {
 	var err error
 	Db, err = sql.Open("mysql", "capstone_user:capstone@/")
@@ -120,4 +124,16 @@ func GenerateSessionToken() (string, error) {
 
 type PageData struct {
 	Title string
+	// Template string
+	// TemplateName string
+	// Template     *template.Template
+}
+
+// Create a new cookie with the session token
+cookie := http.Cookie{
+	Name:     "session_token",
+	Value:    sessionToken,
+	Path:     "/", // Set the path where the cookie is valid (root path in this case)
+	Expires:  expiresAt,
+	HttpOnly: true, // Prevent JavaScript access to the cookie
 }

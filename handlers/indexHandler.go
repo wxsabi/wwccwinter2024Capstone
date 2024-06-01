@@ -9,7 +9,7 @@ import (
 // IndexHandler is a function that handles requests to the index page.
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse the layout.html and index.html files. If there's an error, it will panic.
-	tmpl, err := template.ParseFiles("html/layout.html", "index.html")
+	tmpl, err := template.ParseFiles("html/layout.html", "html/index.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -31,3 +31,17 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// Unlock the mutex to allow other goroutines to access the data.
 	models.Mu.Unlock()
 }
+
+// indexTmpl, err := template.ParseFiles("index.html")
+// if err != nil {
+// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+// 	return
+// }
+
+// buf := bytes.NewBuffer(indexTmpl.RawContent())
+
+// htmldata := models.PageData{
+// 	Title:        "Britl!",
+// 	TemplateName: "indexcontent",
+// 	Template:     strings.NewReader(buf.String()).ReadString('\n'),
+// }
