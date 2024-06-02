@@ -91,7 +91,7 @@ func InitDb() {
 		Description VARCHAR(255),
 		Price DECIMAL(10, 2),
 		ListedAt DATETIME,
-		IsSold BOOLEAN DEFAULT FALSE,
+		IsSold BOOLEAN DEFAULT TRUE,
 		FOREIGN KEY(UserID) REFERENCES Users(ID)
 	);
 	`)
@@ -127,13 +127,4 @@ type PageData struct {
 	// Template string
 	// TemplateName string
 	// Template     *template.Template
-}
-
-// Create a new cookie with the session token
-cookie := http.Cookie{
-	Name:     "session_token",
-	Value:    sessionToken,
-	Path:     "/", // Set the path where the cookie is valid (root path in this case)
-	Expires:  expiresAt,
-	HttpOnly: true, // Prevent JavaScript access to the cookie
 }

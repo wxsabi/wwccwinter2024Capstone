@@ -10,4 +10,5 @@ type Item struct {
 	Price       float64
 	ListedAt    time.Time
 	IsSold      bool
+	PhotoURL    string
 }

@@ -28,6 +28,9 @@ func main() {
 	// This will handle the singin
 	http.HandleFunc("/signin", handlers.SigninHandler)
 
+	// This will handle the all-Items div on index.html
+	http.HandleFunc("/allItems", handlers.GetNewestItems)
+
 	// This will serve static files from the /images directory
 	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("images"))))
 

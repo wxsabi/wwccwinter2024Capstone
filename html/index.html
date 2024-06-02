@@ -3,9 +3,11 @@
 <!-- This is the homepage of the marketplace app.   -->
 <!-- JavaScript to check for cookie -->
 <script>
+
+    // This checks to see if there's a cookie present
     function checkCookie() {
         var sessionToken = document.cookie.match(/session_token=([^;]*)/);
-        if (sessionToken) {
+        if (sessionToken !== null && sessionToken !== "") {
             // Send AJAX request to backend to verify the cookie
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/verify-cookie/' + sessionToken[1], true);
@@ -25,7 +27,10 @@
         }
     }
 
-    checkCookie();
+    window.onload = function () {
+        checkCookie();
+    }
+    // alert("After checkcookie");
 
 </script>
 
@@ -40,10 +45,73 @@
 <!-- if the user is not logged in, then this will display a list of items posted for sale
 by all users based on the time they were posted at from newest to oldest. -->
 <div id="all-items" style="display: none;">
-    <h2>Posted Items:</h2>
+    <h2>Latest Items:</h2><br><br>
+    <script>
+        fetch('/allItems')
+            .then(response => {
+                console.log(response.status, response.statusText);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok NOOOOOOOOOOOOO :-(');
+                }
+                return response.json();
+            })
+            .then(items => {
+                //alert(JSON.stringify(items));
+                const allItemsDiv = document.getElementById('all-items');
+                allItemsDiv.style.display = 'block';
+
+                items.forEach(item => {
+                    // Create div for item name and image
+                    const nameImageDiv = document.createElement('div');
+                    nameImageDiv.style.display = 'flex';
+                    nameImageDiv.style.justifyContent = 'space-between';
+
+                    const nameH2 = document.createElement('h2');
+                    nameH2.textContent = item.Name;
+                    nameImageDiv.appendChild(nameH2);
+
+                    // Create img element
+                    const image = document.createElement('img');
+                    image.src = item.PhotoURL;
+                    image.alt = 'Item Image';
+                    image.style.maxWidth = '300px'; // Set maximum width
+                    image.style.height = 'auto'; // Adjust height automatically
+                    nameImageDiv.appendChild(image);
+
+                    // Create div for price
+                    const priceH2 = document.createElement('h2');
+                    priceH2.textContent = `$${item.Price}`; // Add $ sign before the price
+
+                    // Create div for availability
+                    const availabilityDiv = document.createElement('div');
+                    availabilityDiv.className = 'availability'; // Add a Bootstrap class
+                    availabilityDiv.textContent = item.IsSold ? 'Item is Available' : 'Item is Sold';
+
+                    // Create div for description
+                    const descriptionDiv = document.createElement('div');
+                    const descriptionP = document.createElement('p');
+                    descriptionP.textContent = item.Description;
+                    descriptionDiv.appendChild(descriptionP);
+
+                    // Append all divs to itemDiv
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'item'; // Add a Bootstrap class
+                    itemDiv.appendChild(nameImageDiv);
+                    itemDiv.appendChild(priceH2);
+                    itemDiv.appendChild(availabilityDiv);
+                    itemDiv.appendChild(descriptionDiv);
+
+                    // Append itemDiv to allItemsDiv
+                    allItemsDiv.appendChild(itemDiv);
+                });
+
+
+
+            });
+
+    </script>
     <!-- Display list of all posted items here -->
 </div>
-
 
 
 

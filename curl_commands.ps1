@@ -15,3 +15,13 @@ SELECT * FROM Users LEFT JOIN Sessions ON Users.ID = Sessions.UserID LEFT JOIN I
 
 same but also the 4 separate tables:
 SELECT * FROM Users LEFT JOIN Sessions ON Users.ID = Sessions.UserID LEFT JOIN Items ON Users.ID = Items.UserID LEFT JOIN ItemPhotos ON Items.ItemID = ItemPhotos.ItemID; SELECT * FROM Users; SELECT * FROM Sessions; SELECT * FROM Items; SELECT * FROM ItemPhotos;
+
+
+curl -X POST -H "Content-Type: application/json" \
+     -d '{"UserID":1, "Name":"Test Item", "Description":"This is a test item", "Price":9.99, "IsSold":false, "PhotoURL":"/images/test-item.jpg"}' \
+     http://localhost:8888/item
+
+
+curl -X POST -H "Content-Type: application/json" \
+     -d '{"UserID":1, "Name":"Test Item", "Description":"This is a test item", "Price":9.99, "IsSold":false, "PhotoURL":"/images/test-item.jpg"}' \
+     http://localhost:8888/user
