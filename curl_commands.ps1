@@ -25,3 +25,8 @@ curl -X POST -H "Content-Type: application/json" \
 curl -X POST -H "Content-Type: application/json" \
      -d '{"UserID":1, "Name":"Test Item", "Description":"This is a test item", "Price":9.99, "IsSold":false, "PhotoURL":"/images/test-item.jpg"}' \
      http://localhost:8888/user
+
+
+     curl -X POST -H "Content-Type: application/json" -d '{"Name": "Arnold","LastName": "Schwarzenegger","Email": "t800@skynet.com","Password": "12345"}' http://localhost:8888/signup
+
+     {"Name": "Arnold","LastName": "Schwarzenegger","Email": "t800@skynet.com","Password": "12345"}

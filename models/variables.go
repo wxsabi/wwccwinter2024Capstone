@@ -59,7 +59,7 @@ func InitDb() {
 		LastName VARCHAR(255),
 		Email VARCHAR(255) UNIQUE,
 		Password VARCHAR(255), 
-		Photo VARCHAR(255),
+		Photo VARCHAR(255) DEFAULT '/images/default_user.jpg',
 		CreatedAt TIMESTAMP,
 		IsAdmin BOOLEAN DEFAULT FALSE
 	);
@@ -103,7 +103,7 @@ func InitDb() {
 	CREATE TABLE IF NOT EXISTS ItemPhotos (
 		PhotoID INT PRIMARY KEY AUTO_INCREMENT,
 		ItemID INT,
-		PhotoURL VARCHAR(255),
+		PhotoURL VARCHAR(255) DEFAULT '/images/default_user.jpg',
 		FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
 	);
 	`)
@@ -123,7 +123,8 @@ func GenerateSessionToken() (string, error) {
 }
 
 type PageData struct {
-	Title string
+	Title         string
+	SignupSuccess string
 	// Template string
 	// TemplateName string
 	// Template     *template.Template

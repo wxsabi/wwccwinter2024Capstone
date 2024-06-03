@@ -9,7 +9,7 @@ import (
 
 func main() {
 	// This will handle the homepage
-	http.HandleFunc("html/index.html", handlers.IndexHandler)
+	http.HandleFunc("/html/index.html", handlers.IndexHandler)
 	http.HandleFunc("/", handlers.IndexHandler)
 
 	// This will handle the postings/items
@@ -23,10 +23,11 @@ func main() {
 
 	// This will handle the signup
 	http.HandleFunc("/signup", handlers.SignupHandler)
-	http.HandleFunc("/signup.html", handlers.SignupHtmlHandler)
+	http.HandleFunc("/html/signup.html", handlers.SignupHtmlHandler)
 
 	// This will handle the singin
 	http.HandleFunc("/signin", handlers.SigninHandler)
+	http.HandleFunc("/html/signin.html", handlers.SigninHtmlHandler)
 
 	// This will handle the all-Items div on index.html
 	http.HandleFunc("/allItems", handlers.GetNewestItems)

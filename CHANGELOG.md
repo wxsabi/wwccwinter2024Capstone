@@ -1,5 +1,19 @@
 <hr>
 
+### Sun Jun 2 02:07:51 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `0a07235e89fcd21ed5b0e9a18706637ccfb9e2bd`
+
+
+[Update]: Index.html now shows all items
+
+Time spent:
+
+- Added JS to show all items in index.html
+
+
+<hr>
+
 ### Thu May 16 15:11:18 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `d03f2d608ea71b8453ede36933fc3232850c1a6e`

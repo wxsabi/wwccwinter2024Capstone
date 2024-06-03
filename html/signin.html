@@ -1,5 +1,22 @@
-{{define "signin"}}
+{{define "tmpl"}}
 <div>
-    form to isgnin<br><br>
+
+    <!-- Don't have a user? Signup -->
+    <p>Don't have a user? <a href="http://localhost:8888/html/signup.html">Signup</a></p>
+
+    <form action="/signin" method="post" class="form-group">
+        <br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" class="form-control" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" class="form-control" required><br>
+        <input type="submit" value="Login" class="btn btn-primary">
+    </form><br><br>
+
+    <!-- link to reset password -->
+    <a href="#">Forgot your password?</a>
+    <!-- http://localhost:8888/html/resetPassword.html -->
+
 </div>
+
 {{end}}

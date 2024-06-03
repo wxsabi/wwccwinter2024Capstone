@@ -6,23 +6,28 @@ import (
 	"wwccwinter2024Capstone/models"
 )
 
+// SignupHtmlHandler is a function that handles requests to the index page.
 func SignupHtmlHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, htmlerr := template.ParseFiles("html/layout.html", "signup.html")
-	if htmlerr != nil {
-		http.Error(w, htmlerr.Error(), http.StatusInternalServerError)
+	// Parse the layout.html and index.html files. If there's an error, it will panic.
+	tmpl, err := template.ParseFiles("html/layout.html", "html/signup.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	data := models.PageData{
-		Title: "Create User - Britl!",
-	}
-	models.Mu.Lock()
-	htmlerr = tmpl.Execute(w, data)
-	if htmlerr != nil {
-		http.Error(w, htmlerr.Error(), http.StatusInternalServerError)
-	}
-	models.Mu.Unlock()
 
-	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid method", http.StatusMethodNotAllowed)
-		return
+	data := models.PageData{
+		Title: "Britl!",
 	}
+
+	// Lock the mutex to prevent other goroutines from accessing the data at the same time.
+	models.Mu.Lock()
+
+	// Execute the template, writing the generated HTML to the http.ResponseWriter.
+	// The second parameter is the data we want to pass into the template.
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	// Unlock the mutex to allow other goroutines to access the data.
+	models.Mu.Unlock()
 }

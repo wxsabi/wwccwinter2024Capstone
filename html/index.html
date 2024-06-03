@@ -45,7 +45,7 @@
 <!-- if the user is not logged in, then this will display a list of items posted for sale
 by all users based on the time they were posted at from newest to oldest. -->
 <div id="all-items" style="display: none;">
-    <h2>Latest Items:</h2><br><br>
+    <h2>Latest Items:</h2>
     <script>
         fetch('/allItems')
             .then(response => {
@@ -61,6 +61,10 @@ by all users based on the time they were posted at from newest to oldest. -->
                 allItemsDiv.style.display = 'block';
 
                 items.forEach(item => {
+                    // Create parent div for item preview
+                    const itemPreviewDiv = document.createElement('div');
+                    itemPreviewDiv.className = 'itempreview';
+
                     // Create div for item name and image
                     const nameImageDiv = document.createElement('div');
                     nameImageDiv.style.display = 'flex';
@@ -93,24 +97,20 @@ by all users based on the time they were posted at from newest to oldest. -->
                     descriptionP.textContent = item.Description;
                     descriptionDiv.appendChild(descriptionP);
 
-                    // Append all divs to itemDiv
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'item'; // Add a Bootstrap class
-                    itemDiv.appendChild(nameImageDiv);
-                    itemDiv.appendChild(priceH2);
-                    itemDiv.appendChild(availabilityDiv);
-                    itemDiv.appendChild(descriptionDiv);
+                    // Append all divs to itemPreviewDiv
+                    itemPreviewDiv.appendChild(nameImageDiv);
+                    itemPreviewDiv.appendChild(priceH2);
+                    itemPreviewDiv.appendChild(availabilityDiv);
+                    itemPreviewDiv.appendChild(descriptionDiv);
 
-                    // Append itemDiv to allItemsDiv
-                    allItemsDiv.appendChild(itemDiv);
+                    // Append itemPreviewDiv to allItemsDiv
+                    allItemsDiv.appendChild(itemPreviewDiv);
                 });
-
-
 
             });
 
     </script>
-    <!-- Display list of all posted items here -->
+    <br><br>
 </div>
 
 
