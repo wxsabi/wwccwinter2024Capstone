@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -21,15 +22,15 @@ func SigninHandler(w http.ResponseWriter, r *http.Request) {
 	email := r.FormValue("email")
 	inputPassword := r.FormValue("password")
 
-	models.InitDb()
-
 	// Retrieve user data from the database based on the provided email
 	query := "SELECT password FROM users WHERE email = ?"
 	var storedHashedPassword string
 	err := models.Db.QueryRow(query, email).Scan(&storedHashedPassword)
 	if err != nil {
 		log.Printf("Error retrieving user data for email %s: %v", email, err)
-		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
+		fmt.Println("	Invalid email - refreshing page...")
+		//fmt.Println("	", r)
+		http.Redirect(w, r, "/html/signin.html?message=Invalid+email", http.StatusSeeOther)
 		return
 	}
 
@@ -37,7 +38,11 @@ func SigninHandler(w http.ResponseWriter, r *http.Request) {
 	err = bcrypt.CompareHashAndPassword([]byte(storedHashedPassword), []byte(inputPassword))
 	if err != nil {
 		log.Printf("Invalid credentials for email %s: %v", email, err)
-		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
+		// http.Error(w, "Invalid credentials", http.StatusUnauthorized)
+		// Redirect to the login page
+		fmt.Println("	Invalid password - refreshing page...")
+		//fmt.Println("	", r)
+		http.Redirect(w, r, "/html/signin.html?message=Invalid+password", http.StatusSeeOther)
 		return
 	}
 
@@ -62,7 +67,7 @@ func SigninHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Create a new cookie with the session token
 	cookie := http.Cookie{
-		Name:     "session_token",
+		Name:     "session_token", // I wanna change this to britl_session_token
 		Value:    sessionToken,
 		Path:     "/", // Set the path where the cookie is valid (root path in this case)
 		Expires:  expiresAt,
@@ -95,5 +100,5 @@ func SigninHandler(w http.ResponseWriter, r *http.Request) {
 
 	http.SetCookie(w, &cookie)
 
-	http.Redirect(w, r, "/welcome", http.StatusSeeOther)
+	http.Redirect(w, r, "/?message=User+Logged+In", http.StatusSeeOther)
 }

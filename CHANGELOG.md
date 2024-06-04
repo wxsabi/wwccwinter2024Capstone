@@ -1,5 +1,19 @@
 <hr>
 
+### Sun Jun 2 23:48:51 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `d65574daff837038be502459da3c6a9a072fec4e`
+
+
+[Update]: User can now sign up with form
+
+Time spent: 10 hrs
+
+- need to add a success message
+
+
+<hr>
+
 ### Sun Jun 2 02:07:51 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `0a07235e89fcd21ed5b0e9a18706637ccfb9e2bd`

@@ -1,7 +1,1 @@
-- hash the passwords
-- use bcrypt to let users log in
-- create a verbose mode for debugging with an admin toggle
-- figure out user permissions
-- Overall error handling
-- make db table fields mandatory (ID, email,. etc)
-- add a property to struct for regular users and admins.
+Add success message to after signup

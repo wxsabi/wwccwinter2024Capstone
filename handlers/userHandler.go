@@ -18,7 +18,7 @@ func UserHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Panic occurred: %v", r)
 		}
 	}()
-	models.InitDb() // Initialize database
+
 	switch r.Method {
 	case http.MethodGet:
 		rows, err := models.Db.Query("SELECT * FROM Users")

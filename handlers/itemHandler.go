@@ -12,7 +12,7 @@ import (
 )
 
 func ItemHandler(w http.ResponseWriter, r *http.Request) {
-	models.InitDb() // Initialize database
+
 	switch r.Method {
 	case http.MethodGet:
 		// This implicitly sets the value of rows to be the

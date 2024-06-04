@@ -1,52 +1,313 @@
 {{define "tmpl"}}
-
 <!-- This is the homepage of the marketplace app.   -->
 <!-- JavaScript to check for cookie -->
+
+<!-- session id:            ATry5kBblWOEfvT-zCz_JeB3c3ttT6tEQq-S6PanvuE= -->
+
+<div id="message" style="text-align: center; color: green;"></div>
 <script>
-
-    // This checks to see if there's a cookie present
-    function checkCookie() {
-        var sessionToken = document.cookie.match(/session_token=([^;]*)/);
-        if (sessionToken !== null && sessionToken !== "") {
-            // Send AJAX request to backend to verify the cookie
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/verify-cookie/' + sessionToken[1], true);
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    // User is logged in, display their posted items
-                    document.getElementById('user-items').style.display = 'block';
-                } else {
-                    // User is not logged in, display all posted items
-                    document.getElementById('all-items').style.display = 'block';
-                }
-            };
-            xhr.send();
-        } else {
-            // User is not logged in, display all posted items
-            document.getElementById('all-items').style.display = 'block';
-        }
-    }
-
-    window.onload = function () {
-        checkCookie();
-    }
     // alert("After checkcookie");
+    function displayUserItems() {
+        fetch('/userItems')
+            .then(response => {
+                console.log("index.html - displayUserItems(): ", response.status, response.statusText);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok NOOOOOOOOOOOOO :-(');
+                }
+                var userItemsDiv = document.getElementById('user-items');
+                if (!userItemsDiv) {
+                    userItemsDiv = document.createElement('div');
+                    userItemsDiv.id = 'user-items';
+                    userItemsDiv.className = 'mx-auto d-block';
+                    // Select the maincontent div
+                    var mainContentDiv = document.querySelector('.maincontent');
+                    // Append userItemsDiv to mainContentDiv
+                    mainContentDiv.appendChild(userItemsDiv);
+                }
+                return response.json();
+            })
+            .then(items => {
+                //alert(JSON.stringify(items));
+                userItemsDiv = document.getElementById('user-items');
+                userItemsDiv.style.display = 'block';
 
+                if (items === null || items.length === 0) {
+                    console.log("items is null");
+                    const h3 = document.createElement('h3');
+                    h3.textContent = 'You have no postings';
+                    // Append h3 to userItemsDiv
+                    userItemsDiv.appendChild(h3);
+
+                } else {
+                    console.log("doing foreach");
+                    const h3 = document.createElement('h3');
+                    h3.textContent = 'Your postings:';
+                    // Append h3 to userItemsDiv
+                    userItemsDiv.appendChild(h3);
+                    items.forEach(item => {
+                        // Create parent div for item preview
+                        const itemPreviewDiv = document.createElement('div');
+                        itemPreviewDiv.className = 'itempreview';
+
+                        // Create div for item name and image
+                        const nameImageDiv = document.createElement('div');
+                        nameImageDiv.style.display = 'flex';
+                        nameImageDiv.style.justifyContent = 'space-between';
+
+                        const nameH2 = document.createElement('h2');
+                        nameH2.textContent = item.Name;
+                        nameImageDiv.appendChild(nameH2);
+
+                        // Create img element
+                        const image = document.createElement('img');
+                        image.src = item.PhotoURL;
+                        image.alt = 'Item Image';
+                        image.style.maxWidth = '300px'; // Set maximum width
+                        image.style.height = 'auto'; // Adjust height automatically
+                        nameImageDiv.appendChild(image);
+
+                        // Create div for price
+                        const priceH2 = document.createElement('h2');
+                        priceH2.textContent = `$${item.Price}`; // Add $ sign before the price
+
+                        // Create div for availability
+                        const availabilityDiv = document.createElement('div');
+                        availabilityDiv.className = 'availability'; // Add a Bootstrap class
+                        availabilityDiv.textContent = item.IsSold ? 'Item is Available' : 'Item is Sold';
+
+                        // Create div for description
+                        const descriptionDiv = document.createElement('div');
+                        const descriptionP = document.createElement('p');
+                        descriptionP.textContent = item.Description;
+                        descriptionDiv.appendChild(descriptionP);
+
+                        // Append all divs to itemPreviewDiv
+                        itemPreviewDiv.appendChild(nameImageDiv);
+                        itemPreviewDiv.appendChild(priceH2);
+                        itemPreviewDiv.appendChild(availabilityDiv);
+                        itemPreviewDiv.appendChild(descriptionDiv);
+
+                        // Append itemPreviewDiv to userItemsDiv
+                        userItemsDiv.appendChild(itemPreviewDiv);
+                    });
+                }
+            });
+    }
+
+    function displayAllItems() {
+        console.log("Executing all-items div");
+        fetch('/allItems')
+        .then(response => {
+                console.log("index.html - displayallItems(): ", response.status, response.statusText);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok NOOOOOOOOOOOOO :-(');
+                }
+                var allItemsDiv = document.getElementById('all-items');
+                if (!allItemsDiv) {
+                    allItemsDiv = document.createElement('div');
+                    allItemsDiv.id = 'user-items';
+                    allItemsDiv.className = 'mx-auto d-block';
+                    // Select the maincontent div
+                    var mainContentDiv = document.querySelector('.maincontent');
+                    // Append allItemsDiv to mainContentDiv
+                    mainContentDiv.appendChild(allItemsDiv);
+                }
+                return response.json();
+            })
+            .then(items => {
+                //alert(JSON.stringify(items));
+                allItemsDiv = document.getElementById('user-items');
+                allItemsDiv.style.display = 'block';
+
+                if (items === null || items.length === 0) {
+                    console.log("items is null");
+                    const h3 = document.createElement('h3');
+                    h3.textContent = 'No one has posted anything :-(';
+                    // Append h3 to allItemsDiv
+                    allItemsDiv.appendChild(h3);
+
+                } else {
+                    console.log("doing foreach");
+                    const h3 = document.createElement('h3');
+                    h3.textContent = 'See what others have posted:';
+                    // Append h3 to userItemsDiv
+                    allItemsDiv.appendChild(h3);
+                    items.forEach(item => {
+                        // Create parent div for item preview
+                        const itemPreviewDiv = document.createElement('div');
+                        itemPreviewDiv.className = 'itempreview';
+
+                        // Create div for item name and image
+                        const nameImageDiv = document.createElement('div');
+                        nameImageDiv.style.display = 'flex';
+                        nameImageDiv.style.justifyContent = 'space-between';
+
+                        const nameH2 = document.createElement('h2');
+                        nameH2.textContent = item.Name;
+                        nameImageDiv.appendChild(nameH2);
+
+                        // Create img element
+                        const image = document.createElement('img');
+                        image.src = item.PhotoURL;
+                        image.alt = 'Item Image';
+                        image.style.maxWidth = '300px'; // Set maximum width
+                        image.style.height = 'auto'; // Adjust height automatically
+                        nameImageDiv.appendChild(image);
+
+                        // Create div for price
+                        const priceH2 = document.createElement('h2');
+                        priceH2.textContent = `$${item.Price}`; // Add $ sign before the price
+
+                        // Create div for availability
+                        const availabilityDiv = document.createElement('div');
+                        availabilityDiv.className = 'availability'; // Add a Bootstrap class
+                        availabilityDiv.textContent = item.IsSold ? 'Item is Available' : 'Item is Sold';
+
+                        // Create div for description
+                        const descriptionDiv = document.createElement('div');
+                        const descriptionP = document.createElement('p');
+                        descriptionP.textContent = item.Description;
+                        descriptionDiv.appendChild(descriptionP);
+
+                        // Append all divs to itemPreviewDiv
+                        itemPreviewDiv.appendChild(nameImageDiv);
+                        itemPreviewDiv.appendChild(priceH2);
+                        itemPreviewDiv.appendChild(availabilityDiv);
+                        itemPreviewDiv.appendChild(descriptionDiv);
+
+                        // Append itemPreviewDiv to allItemsDiv
+                        allItemsDiv.appendChild(itemPreviewDiv);
+                    });
+                }
+            });
+    }
+
+    function IndexCheckCookie() {
+        console.log("index.html: Checking session status with the server...");
+        // Send AJAX request to backend to verify the session
+        fetch('/verify-cookie')
+            .then(response => {
+                if (response.status === 200) {
+                    // User is logged in, display their posted items and the logout button
+                    console.log("index.html: Response status = ", response.status);
+                    // document.getElementById('user-items').style.display = 'block';
+                    displayUserItems();
+                } else {
+                    // User is not logged in, display all posted items and hide the logout button
+                    console.log("index.html: Response status = ", response.status);
+                    // document.getElementById('all-items').style.display = 'block';
+                    displayAllItems();
+
+                }
+            });
+    }
+
+    // window.onload = function () {
+    //     console.log("index.html: Window loaded, IndexCheckCookie() will now run");
+    //     IndexCheckCookie();
+    // }
+    IndexCheckCookie();
+
+    // Parse the URL parameters
+    var params = new URLSearchParams(window.location.search);
+    
+    // Get the message parameter
+    var message = params.get('message');
+
+    // If there's a message, display it
+    if (message) {
+        var messageDiv = document.getElementById('message');
+        messageDiv.textContent = message;
+
+        // Clear the message after 5 seconds
+        setTimeout(function() {
+            messageDiv.textContent = '';
+        }, 5000);
+    }
 </script>
 
-<!-- if the user is logged in, meaning, if there's a cookie found by the web server 
-    written in golang, then a list of items that the user has posted from newest 
+<!-- if the user is logged in, meaning, if there's a cookie found by the web server, 
+    then a list of items that the user has posted("user-items" div) from newest 
     to oldest will be displayed if any.-->
-<div id="user-items" style="display: none;">
-    <h2>Your Posted Items:</h2>
-    <!-- Display list of user's posted items here -->
-</div>
+<!-- <div id="user-items" style="display: none;">
+    <h2>Your Postings:</h2>
+    <script>
+        console.log("Executing user-items div");
+        var userItemsDiv = document.getElementById('user-items');
+        var displayStyle = window.getComputedStyle(userItemsDiv).display;
+        console.log("Current display value of user-items div: " + displayStyle);
+        fetch('/userItems')
+            .then(response => {
+                console.log(response.status, response.statusText);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(items => {
+                const userItemsDiv = document.getElementById('user-items');
+                userItemsDiv.style.display = 'block';
+    
+                items.forEach(item => {
+                    // Similar to the all-items div, create elements for item preview
+                    const itemPreviewDiv = document.createElement('div');
+                    itemPreviewDiv.className = 'itempreview';
+    
+                    // Create div for item name and image
+                    const nameImageDiv = document.createElement('div');
+                    nameImageDiv.style.display = 'flex';
+                    nameImageDiv.style.justifyContent = 'space-between';
+    
+                    const nameH2 = document.createElement('h2');
+                    nameH2.textContent = item.Name;
+                    nameImageDiv.appendChild(nameH2);
+    
+                    // Create img element
+                    const image = document.createElement('img');
+                    image.src = item.PhotoURL;
+                    image.alt = 'Item Image';
+                    image.style.maxWidth = '300px'; // Set maximum width
+                    image.style.height = 'auto'; // Adjust height automatically
+                    nameImageDiv.appendChild(image);
+    
+                    // Create div for price
+                    const priceH2 = document.createElement('h2');
+                    priceH2.textContent = `$${item.Price}`; // Add $ sign before the price
+    
+                    // Create div for availability
+                    const availabilityDiv = document.createElement('div');
+                    availabilityDiv.className = 'availability'; // Add a Bootstrap class
+                    availabilityDiv.textContent = item.IsSold ? 'Item is Available' : 'Item is Sold';
+    
+                    // Create div for description
+                    const descriptionDiv = document.createElement('div');
+                    const descriptionP = document.createElement('p');
+                    descriptionP.textContent = item.Description;
+                    descriptionDiv.appendChild(descriptionP);
+    
+                    // Append all divs to itemPreviewDiv
+                    itemPreviewDiv.appendChild(nameImageDiv);
+                    itemPreviewDiv.appendChild(priceH2);
+                    itemPreviewDiv.appendChild(availabilityDiv);
+                    itemPreviewDiv.appendChild(descriptionDiv);
+    
+                    // Append itemPreviewDiv to userItemsDiv
+                    userItemsDiv.appendChild(itemPreviewDiv);
+                });
+            });
+    </script>
+    
+</div> -->
 
 <!-- if the user is not logged in, then this will display a list of items posted for sale
 by all users based on the time they were posted at from newest to oldest. -->
-<div id="all-items" style="display: none;">
+<!-- <div id="all-items" style="display: none;">
     <h2>Latest Items:</h2>
     <script>
+        console.log("Executing all-items div");
+        var allItemsDiv = document.getElementById('all-items');
+        var displayStyle = window.getComputedStyle(allItemsDiv).display;
+        console.log("Current display value of all-items div: " + displayStyle);
         fetch('/allItems')
             .then(response => {
                 console.log(response.status, response.statusText);
@@ -106,13 +367,8 @@ by all users based on the time they were posted at from newest to oldest. -->
                     // Append itemPreviewDiv to allItemsDiv
                     allItemsDiv.appendChild(itemPreviewDiv);
                 });
-
             });
-
     </script>
     <br><br>
-</div>
-
-
-
+</div> -->
 {{end}}

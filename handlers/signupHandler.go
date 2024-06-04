@@ -19,7 +19,6 @@ import (
 )
 
 func SignupHandler(w http.ResponseWriter, r *http.Request) {
-	models.InitDb() // Initialize database
 
 	fmt.Println(os.Getwd())
 

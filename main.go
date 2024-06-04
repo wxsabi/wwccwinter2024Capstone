@@ -5,9 +5,13 @@ import (
 	"log"
 	"net/http"
 	"wwccwinter2024Capstone/handlers"
+	"wwccwinter2024Capstone/models"
 )
 
 func main() {
+	// Initialize database
+	models.InitDb()
+
 	// This will handle the homepage
 	http.HandleFunc("/html/index.html", handlers.IndexHandler)
 	http.HandleFunc("/", handlers.IndexHandler)
@@ -29,8 +33,14 @@ func main() {
 	http.HandleFunc("/signin", handlers.SigninHandler)
 	http.HandleFunc("/html/signin.html", handlers.SigninHtmlHandler)
 
+	// This will log the user out
+	http.HandleFunc("/logout", handlers.LogoutHandler)
+
 	// This will handle the all-Items div on index.html
 	http.HandleFunc("/allItems", handlers.GetNewestItems)
+
+	// This will handle the all-Items div on index.html
+	http.HandleFunc("/userItems", handlers.GetUserItems)
 
 	// This will serve static files from the /images directory
 	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("images"))))

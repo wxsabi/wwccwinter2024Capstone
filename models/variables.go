@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"database/sql"
 	"encoding/base64"
+	"fmt"
 	"log"
 	"sync"
 	"time"
@@ -110,6 +111,7 @@ func InitDb() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("Database Initialized")
 }
 
 // generateSessionToken generates a new session token
@@ -128,4 +130,9 @@ type PageData struct {
 	// Template string
 	// TemplateName string
 	// Template     *template.Template
+}
+
+type ResponseData struct {
+	Items    []Item
+	UserName string
 }
