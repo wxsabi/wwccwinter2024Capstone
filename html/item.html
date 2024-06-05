@@ -42,10 +42,10 @@
             image.className = 'img-fluid rounded'; // Bootstrap classes for responsive images with rounded corners
 
             // Create delete button
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete Item';
-            deleteButton.className = 'btn btn-danger'; // Bootstrap classes for a red button
-            deleteButton.onclick = function () {
+            const deleteIButton = document.createElement('button');
+            deleteIButton.textContent = 'Delete Item';
+            deleteIButton.className = 'btn btn-danger'; // Bootstrap classes for a red button
+            deleteIButton.onclick = function () {
                 fetch(`/item?itemId=${encodeURIComponent(item.ItemID)}`, {
                     method: 'DELETE',
                 })

@@ -1,5 +1,17 @@
 <hr>
 
+### Wed Jun 5 02:44:07 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `b6cf201f7bf5ac4936624553d8fd2b344d124ccc`
+
+
+[Added]: Added presentation files
+
+Time spent: --
+
+
+<hr>
+
 ### Wed Jun 5 02:14:33 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `81f2ba1212539416a9b1b55e640773e3d50e247b`
