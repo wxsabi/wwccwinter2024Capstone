@@ -1,5 +1,19 @@
 <hr>
 
+### Wed Jun 5 01:36:17 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `2aa2b71014c10713f5adabddaa654b138e8ac994`
+
+
+[Update]: slight touch of css
+
+Time spent:
+
+-
+
+
+<hr>
+
 ### Wed Jun 5 01:21:08 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `43c8332ddaf233a8e1731661b550e8921c76063a`
