@@ -1,0 +1,24 @@
+{{define "tmpl"}}
+<div class="container">
+    <h2 class="text-center">Item details:</h2>
+    <form action="/item" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Item Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" class="form-control" step="0.01" required>
+        </div>        
+        <div class="form-group">
+            <label for="photo">Photo:</label>
+            <input type="file" id="photo" name="photo" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Item</button>
+    </form>
+</div>
+{{end}}

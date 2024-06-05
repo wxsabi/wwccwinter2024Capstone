@@ -1,16 +1,12 @@
 package handlers
 
 import (
-	"fmt"
-
 	"crypto/rand"
 	"encoding/hex"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
-
-	// "os"
-	//  "strconv"
 	"time"
 	"wwccwinter2024Capstone/models"
 
@@ -23,7 +19,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(os.Getwd())
 
 	// Parse the multipart form
-	err := r.ParseMultipartForm(10 << 20) // limit your maxMultipartMemory
+	err := r.ParseMultipartForm(10 << 20) // limit maxMultipartMemory
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -62,8 +58,6 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fileName := hex.EncodeToString(randBytes) + "_" + header.Filename
-
-	// TODO: Save the file to disk or a database here
 
 	// Check if email already exists
 	var existingUser models.User
@@ -146,5 +140,5 @@ VALUES (?, ?, ?, ?, ?, ?, ?)
 	fmt.Print("user ", user.Name, " created sucessfully!")
 
 	// Redirect to the login page
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/html/signin.html?message=User+Created+Successfully", http.StatusSeeOther)
 }

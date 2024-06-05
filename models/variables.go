@@ -86,13 +86,13 @@ func InitDb() {
 
 	_, err = Db.Exec(`
 	CREATE TABLE IF NOT EXISTS Items (
-		ItemID INT PRIMARY KEY,
+		ItemID INT AUTO_INCREMENT PRIMARY KEY,
 		UserID INT,
 		Name VARCHAR(255),
-		Description VARCHAR(255),
+		Description VARCHAR(1000),
 		Price DECIMAL(10, 2),
 		ListedAt DATETIME,
-		IsSold BOOLEAN DEFAULT TRUE,
+		IsSold BOOLEAN DEFAULT FALSE,
 		FOREIGN KEY(UserID) REFERENCES Users(ID)
 	);
 	`)
@@ -127,6 +127,7 @@ func GenerateSessionToken() (string, error) {
 type PageData struct {
 	Title         string
 	SignupSuccess string
+	ItemId        string
 	// Template string
 	// TemplateName string
 	// Template     *template.Template

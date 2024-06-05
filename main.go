@@ -18,12 +18,20 @@ func main() {
 
 	// This will handle the postings/items
 	http.HandleFunc("/item", handlers.ItemHandler)
+	http.HandleFunc("/html/post.html", handlers.PostHtmlHandler)
 
 	// This will verify the cookie
 	http.HandleFunc("/verify-cookie", handlers.CookieHandler)
 
 	// This will handle the users
 	http.HandleFunc("/user", handlers.UserHandler)
+
+	// This will delete a user
+	http.HandleFunc("/deleteUser", handlers.DeleteUserHandler)
+
+	// This will show a specific item
+	http.HandleFunc("/seeItem", handlers.SeeItemHandler)
+	http.HandleFunc("/html/seeItem.html", handlers.SeeItemHtmlHandler)
 
 	// This will handle the signup
 	http.HandleFunc("/signup", handlers.SignupHandler)

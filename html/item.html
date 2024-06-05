@@ -1,0 +1,77 @@
+{{define "tmpl"}}
+<div class="container" id="item-container">
+    <!-- Item details will be added here -->
+</div>
+
+<script>
+    // Get the itemId from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const itemId = urlParams.get('itemId');
+
+    // Fetch the item from the /seeItem endpoint
+    fetch(`/seeItem?itemId=${encodeURIComponent(itemId)}`)
+        .then(response => response.json())
+        .then(item => {
+            // Create elements for the item details
+            console.log(item);
+
+            const nameH2 = document.createElement('h2');
+            nameH2.textContent = `${item.Name}`;
+            nameH2.className = 'display-4'; // Bootstrap class for large headings
+
+            const descriptionP = document.createElement('p');
+            descriptionP.textContent = `Description: ${item.Description}`;
+            descriptionP.className = 'lead'; // Bootstrap class for leading paragraph
+
+            const priceP = document.createElement('p');
+            priceP.textContent = `Price: ${item.Price}`;
+            priceP.className = 'text-info'; // Bootstrap class for informational text
+
+            const listedAtP = document.createElement('p');
+            listedAtP.textContent = `ListedAt: ${new Date(item.ListedAt).toLocaleDateString()}`;
+            listedAtP.className = 'text-muted'; // Bootstrap class for muted text
+
+            const isSoldP = document.createElement('p');
+            isSoldP.textContent = `IsSold: ${item.IsSold ? 'Yes' : 'No'}`;
+            isSoldP.className = item.IsSold ? 'text-success' : 'text-danger'; // Bootstrap classes for success/danger text
+
+            // Create img element
+            const image = document.createElement('img');
+            image.src = item.PhotoURL;
+            image.alt = 'Item Image';
+            image.className = 'img-fluid rounded'; // Bootstrap classes for responsive images with rounded corners
+
+            // Create delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete Item';
+            deleteButton.className = 'btn btn-danger'; // Bootstrap classes for a red button
+            deleteButton.onclick = function () {
+                fetch(`/item?itemId=${encodeURIComponent(item.ItemID)}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        // Manually redirect to the new URL
+    window.location.href = response.url;
+                    })
+                    .catch(error => {
+                        console.error('There has been a problem with your fetch operation:', error);
+                    });
+            };
+
+            // Append the elements to the container div
+            const container = document.getElementById('item-container');
+            container.className = 'container'; // Bootstrap class for a responsive fixed-width container
+            container.appendChild(nameH2);
+            container.appendChild(descriptionP);
+            container.appendChild(priceP);
+            container.appendChild(listedAtP);
+            container.appendChild(isSoldP);
+            container.appendChild(image); // Append the image to the container
+            container.appendChild(deleteButton); // Append the delete button to the container
+        });
+</script>
+
+{{end}}

@@ -27,7 +27,7 @@
                 return response.json();
             })
             .then(items => {
-                //alert(JSON.stringify(items));
+                console.log(items);
                 userItemsDiv = document.getElementById('user-items');
                 userItemsDiv.style.display = 'block';
 
@@ -48,48 +48,62 @@
                         // Create parent div for item preview
                         const itemPreviewDiv = document.createElement('div');
                         itemPreviewDiv.className = 'itempreview';
+                        itemPreviewDiv.style.display = 'flex';
+                        itemPreviewDiv.style.justifyContent = 'space-between';
 
-                        // Create div for item name and image
-                        const nameImageDiv = document.createElement('div');
-                        nameImageDiv.style.display = 'flex';
-                        nameImageDiv.style.justifyContent = 'space-between';
+                        // Create div for item details
+                        const itemDetailsDiv = document.createElement('div');
+                        itemDetailsDiv.style.display = 'flex';
+                        itemDetailsDiv.style.flexDirection = 'column';
+                        itemDetailsDiv.style.justifyContent = 'space-between';
+
+                        // Create anchor element
+                        const anchor = document.createElement('a');
+                        anchor.href = `http://localhost:8888/html/seeItem.html?itemId=${encodeURIComponent(item.ItemID)}`;
 
                         const nameH2 = document.createElement('h2');
                         nameH2.textContent = item.Name;
-                        nameImageDiv.appendChild(nameH2);
+                        anchor.appendChild(nameH2);
+                        itemDetailsDiv.appendChild(anchor);
 
-                        // Create img element
-                        const image = document.createElement('img');
-                        image.src = item.PhotoURL;
-                        image.alt = 'Item Image';
-                        image.style.maxWidth = '300px'; // Set maximum width
-                        image.style.height = 'auto'; // Adjust height automatically
-                        nameImageDiv.appendChild(image);
+                        // const aH2 = document.createElement('h2');
+                        // aH2.textContent = item.ItemID;
+                        // anchor.appendChild(aH2);
+                        // itemDetailsDiv.appendChild(anchor);
 
                         // Create div for price
                         const priceH2 = document.createElement('h2');
                         priceH2.textContent = `$${item.Price}`; // Add $ sign before the price
+                        itemDetailsDiv.appendChild(priceH2);
 
                         // Create div for availability
                         const availabilityDiv = document.createElement('div');
                         availabilityDiv.className = 'availability'; // Add a Bootstrap class
                         availabilityDiv.textContent = item.IsSold ? 'Item is Available' : 'Item is Sold';
+                        itemDetailsDiv.appendChild(availabilityDiv);
 
                         // Create div for description
                         const descriptionDiv = document.createElement('div');
                         const descriptionP = document.createElement('p');
                         descriptionP.textContent = item.Description;
                         descriptionDiv.appendChild(descriptionP);
+                        itemDetailsDiv.appendChild(descriptionDiv);
 
-                        // Append all divs to itemPreviewDiv
-                        itemPreviewDiv.appendChild(nameImageDiv);
-                        itemPreviewDiv.appendChild(priceH2);
-                        itemPreviewDiv.appendChild(availabilityDiv);
-                        itemPreviewDiv.appendChild(descriptionDiv);
+                        // Append itemDetailsDiv to itemPreviewDiv
+                        itemPreviewDiv.appendChild(itemDetailsDiv);
+
+                        // Create img element
+                        const image = document.createElement('img');
+                        image.src = item.PhotoURL;
+                        image.alt = 'Item Image';
+                        image.style.maxHeight = '200px'; // Set maximum width
+                        image.style.height = 'auto'; // Adjust height automatically
+                        itemPreviewDiv.appendChild(image);
 
                         // Append itemPreviewDiv to userItemsDiv
                         userItemsDiv.appendChild(itemPreviewDiv);
                     });
+
                 }
             });
     }
@@ -97,87 +111,101 @@
     function displayAllItems() {
         console.log("Executing all-items div");
         fetch('/allItems')
-        .then(response => {
-                console.log("index.html - displayallItems(): ", response.status, response.statusText);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok NOOOOOOOOOOOOO :-(');
-                }
-                var allItemsDiv = document.getElementById('all-items');
-                if (!allItemsDiv) {
-                    allItemsDiv = document.createElement('div');
-                    allItemsDiv.id = 'user-items';
-                    allItemsDiv.className = 'mx-auto d-block';
-                    // Select the maincontent div
-                    var mainContentDiv = document.querySelector('.maincontent');
-                    // Append allItemsDiv to mainContentDiv
-                    mainContentDiv.appendChild(allItemsDiv);
-                }
-                return response.json();
-            })
+            .then(response => {
+            console.log("index.html - displayallItems(): ", response.status, response.statusText);
+            if (!response.ok) {
+                throw new Error('Network response was not ok NOOOOOOOOOOOOO :-(');
+            }
+            var allItemsDiv = document.getElementById('all-items');
+            if (!allItemsDiv) {
+                allItemsDiv = document.createElement('div');
+                allItemsDiv.id = 'All-items';
+                allItemsDiv.className = 'mx-auto d-block';
+                // Select the maincontent div
+                var mainContentDiv = document.querySelector('.maincontent');
+                // Append allItemsDiv to mainContentDiv
+                mainContentDiv.appendChild(allItemsDiv);
+            }
+            return response.json();
+        })
             .then(items => {
-                //alert(JSON.stringify(items));
-                allItemsDiv = document.getElementById('user-items');
+                console.log(items);
+                allItemsDiv = document.getElementById('All-items');
                 allItemsDiv.style.display = 'block';
 
                 if (items === null || items.length === 0) {
                     console.log("items is null");
                     const h3 = document.createElement('h3');
-                    h3.textContent = 'No one has posted anything :-(';
+                    h3.textContent = 'You have no postings';
                     // Append h3 to allItemsDiv
                     allItemsDiv.appendChild(h3);
 
                 } else {
                     console.log("doing foreach");
                     const h3 = document.createElement('h3');
-                    h3.textContent = 'See what others have posted:';
-                    // Append h3 to userItemsDiv
+                    h3.textContent = 'See the latest postings:';
+                    // Append h3 to allItemsDiv
                     allItemsDiv.appendChild(h3);
                     items.forEach(item => {
                         // Create parent div for item preview
                         const itemPreviewDiv = document.createElement('div');
                         itemPreviewDiv.className = 'itempreview';
+                        itemPreviewDiv.style.display = 'flex';
+                        itemPreviewDiv.style.justifyContent = 'space-between';
 
-                        // Create div for item name and image
-                        const nameImageDiv = document.createElement('div');
-                        nameImageDiv.style.display = 'flex';
-                        nameImageDiv.style.justifyContent = 'space-between';
+                        // Create div for item details
+                        const itemDetailsDiv = document.createElement('div');
+                        itemDetailsDiv.style.display = 'flex';
+                        itemDetailsDiv.style.flexDirection = 'column';
+                        itemDetailsDiv.style.justifyContent = 'space-between';
+
+                        // Create anchor element
+                        const anchor = document.createElement('a');
+                        anchor.href = `http://localhost:8888/html/seeItem.html?itemId=${encodeURIComponent(item.ItemID)}`;
 
                         const nameH2 = document.createElement('h2');
                         nameH2.textContent = item.Name;
-                        nameImageDiv.appendChild(nameH2);
+                        anchor.appendChild(nameH2);
+                        itemDetailsDiv.appendChild(anchor);
 
-                        // Create img element
-                        const image = document.createElement('img');
-                        image.src = item.PhotoURL;
-                        image.alt = 'Item Image';
-                        image.style.maxWidth = '300px'; // Set maximum width
-                        image.style.height = 'auto'; // Adjust height automatically
-                        nameImageDiv.appendChild(image);
+                        // const aH2 = document.createElement('h2');
+                        // aH2.textContent = item.ItemID;
+                        // anchor.appendChild(aH2);
+                        // itemDetailsDiv.appendChild(anchor);
 
                         // Create div for price
                         const priceH2 = document.createElement('h2');
                         priceH2.textContent = `$${item.Price}`; // Add $ sign before the price
+                        itemDetailsDiv.appendChild(priceH2);
 
                         // Create div for availability
                         const availabilityDiv = document.createElement('div');
                         availabilityDiv.className = 'availability'; // Add a Bootstrap class
                         availabilityDiv.textContent = item.IsSold ? 'Item is Available' : 'Item is Sold';
+                        itemDetailsDiv.appendChild(availabilityDiv);
 
                         // Create div for description
                         const descriptionDiv = document.createElement('div');
                         const descriptionP = document.createElement('p');
                         descriptionP.textContent = item.Description;
                         descriptionDiv.appendChild(descriptionP);
+                        itemDetailsDiv.appendChild(descriptionDiv);
 
-                        // Append all divs to itemPreviewDiv
-                        itemPreviewDiv.appendChild(nameImageDiv);
-                        itemPreviewDiv.appendChild(priceH2);
-                        itemPreviewDiv.appendChild(availabilityDiv);
-                        itemPreviewDiv.appendChild(descriptionDiv);
+                        // Append itemDetailsDiv to itemPreviewDiv
+                        itemPreviewDiv.appendChild(itemDetailsDiv);
+
+                        // Create img element
+                        const image = document.createElement('img');
+                        image.src = item.PhotoURL;
+                        image.alt = 'Item Image';
+                        image.style.maxHeight = '200px'; // Set maximum width
+                        image.style.height = 'auto'; // Adjust height automaticAlly
+                        itemPreviewDiv.appendChild(image);
 
                         // Append itemPreviewDiv to allItemsDiv
                         allItemsDiv.appendChild(itemPreviewDiv);
                     });
+
                 }
             });
     }
@@ -210,7 +238,7 @@
 
     // Parse the URL parameters
     var params = new URLSearchParams(window.location.search);
-    
+
     // Get the message parameter
     var message = params.get('message');
 
@@ -220,155 +248,9 @@
         messageDiv.textContent = message;
 
         // Clear the message after 5 seconds
-        setTimeout(function() {
+        setTimeout(function () {
             messageDiv.textContent = '';
         }, 5000);
     }
 </script>
-
-<!-- if the user is logged in, meaning, if there's a cookie found by the web server, 
-    then a list of items that the user has posted("user-items" div) from newest 
-    to oldest will be displayed if any.-->
-<!-- <div id="user-items" style="display: none;">
-    <h2>Your Postings:</h2>
-    <script>
-        console.log("Executing user-items div");
-        var userItemsDiv = document.getElementById('user-items');
-        var displayStyle = window.getComputedStyle(userItemsDiv).display;
-        console.log("Current display value of user-items div: " + displayStyle);
-        fetch('/userItems')
-            .then(response => {
-                console.log(response.status, response.statusText);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(items => {
-                const userItemsDiv = document.getElementById('user-items');
-                userItemsDiv.style.display = 'block';
-    
-                items.forEach(item => {
-                    // Similar to the all-items div, create elements for item preview
-                    const itemPreviewDiv = document.createElement('div');
-                    itemPreviewDiv.className = 'itempreview';
-    
-                    // Create div for item name and image
-                    const nameImageDiv = document.createElement('div');
-                    nameImageDiv.style.display = 'flex';
-                    nameImageDiv.style.justifyContent = 'space-between';
-    
-                    const nameH2 = document.createElement('h2');
-                    nameH2.textContent = item.Name;
-                    nameImageDiv.appendChild(nameH2);
-    
-                    // Create img element
-                    const image = document.createElement('img');
-                    image.src = item.PhotoURL;
-                    image.alt = 'Item Image';
-                    image.style.maxWidth = '300px'; // Set maximum width
-                    image.style.height = 'auto'; // Adjust height automatically
-                    nameImageDiv.appendChild(image);
-    
-                    // Create div for price
-                    const priceH2 = document.createElement('h2');
-                    priceH2.textContent = `$${item.Price}`; // Add $ sign before the price
-    
-                    // Create div for availability
-                    const availabilityDiv = document.createElement('div');
-                    availabilityDiv.className = 'availability'; // Add a Bootstrap class
-                    availabilityDiv.textContent = item.IsSold ? 'Item is Available' : 'Item is Sold';
-    
-                    // Create div for description
-                    const descriptionDiv = document.createElement('div');
-                    const descriptionP = document.createElement('p');
-                    descriptionP.textContent = item.Description;
-                    descriptionDiv.appendChild(descriptionP);
-    
-                    // Append all divs to itemPreviewDiv
-                    itemPreviewDiv.appendChild(nameImageDiv);
-                    itemPreviewDiv.appendChild(priceH2);
-                    itemPreviewDiv.appendChild(availabilityDiv);
-                    itemPreviewDiv.appendChild(descriptionDiv);
-    
-                    // Append itemPreviewDiv to userItemsDiv
-                    userItemsDiv.appendChild(itemPreviewDiv);
-                });
-            });
-    </script>
-    
-</div> -->
-
-<!-- if the user is not logged in, then this will display a list of items posted for sale
-by all users based on the time they were posted at from newest to oldest. -->
-<!-- <div id="all-items" style="display: none;">
-    <h2>Latest Items:</h2>
-    <script>
-        console.log("Executing all-items div");
-        var allItemsDiv = document.getElementById('all-items');
-        var displayStyle = window.getComputedStyle(allItemsDiv).display;
-        console.log("Current display value of all-items div: " + displayStyle);
-        fetch('/allItems')
-            .then(response => {
-                console.log(response.status, response.statusText);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok NOOOOOOOOOOOOO :-(');
-                }
-                return response.json();
-            })
-            .then(items => {
-                //alert(JSON.stringify(items));
-                const allItemsDiv = document.getElementById('all-items');
-                allItemsDiv.style.display = 'block';
-
-                items.forEach(item => {
-                    // Create parent div for item preview
-                    const itemPreviewDiv = document.createElement('div');
-                    itemPreviewDiv.className = 'itempreview';
-
-                    // Create div for item name and image
-                    const nameImageDiv = document.createElement('div');
-                    nameImageDiv.style.display = 'flex';
-                    nameImageDiv.style.justifyContent = 'space-between';
-
-                    const nameH2 = document.createElement('h2');
-                    nameH2.textContent = item.Name;
-                    nameImageDiv.appendChild(nameH2);
-
-                    // Create img element
-                    const image = document.createElement('img');
-                    image.src = item.PhotoURL;
-                    image.alt = 'Item Image';
-                    image.style.maxWidth = '300px'; // Set maximum width
-                    image.style.height = 'auto'; // Adjust height automatically
-                    nameImageDiv.appendChild(image);
-
-                    // Create div for price
-                    const priceH2 = document.createElement('h2');
-                    priceH2.textContent = `$${item.Price}`; // Add $ sign before the price
-
-                    // Create div for availability
-                    const availabilityDiv = document.createElement('div');
-                    availabilityDiv.className = 'availability'; // Add a Bootstrap class
-                    availabilityDiv.textContent = item.IsSold ? 'Item is Available' : 'Item is Sold';
-
-                    // Create div for description
-                    const descriptionDiv = document.createElement('div');
-                    const descriptionP = document.createElement('p');
-                    descriptionP.textContent = item.Description;
-                    descriptionDiv.appendChild(descriptionP);
-
-                    // Append all divs to itemPreviewDiv
-                    itemPreviewDiv.appendChild(nameImageDiv);
-                    itemPreviewDiv.appendChild(priceH2);
-                    itemPreviewDiv.appendChild(availabilityDiv);
-                    itemPreviewDiv.appendChild(descriptionDiv);
-
-                    // Append itemPreviewDiv to allItemsDiv
-                    allItemsDiv.appendChild(itemPreviewDiv);
-                });
-            });
-    </script>
-    <br><br>
-</div> -->
 {{end}}

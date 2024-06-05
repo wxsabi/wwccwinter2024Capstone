@@ -33,7 +33,8 @@
 
                 <!-- Right-aligned login/logout link -->
                 <div class="login-link">
-                    <div class="nav-item" id="login-item"> <p>Already a user? </p>
+                    <div class="nav-item" id="login-item">
+                        <p>Already a user? </p>
                         <a class="nav-link" href="http://localhost:8888/html/signin.html" id="login-link">
                             Login
                         </a>
@@ -44,28 +45,27 @@
                         </a>
                     </div>
                 </div>
-                
-                
             </nav>
         </div>
     </header>
     <nav>
-        <!-- Navigation content goes here -->
-        This is a Nav. No clue what goes here
+        <marquee> Walla Walla Community College</marquee>
     </nav>
     <div class="bodydiv">
         <div class="row">
             <aside class="col-2">
                 <!-- Existing side panel content -->
-                <div class="sidepanel" style="position: relative;">
-                    ASIDE SIDE PANEL
-                    <!-- Other content -->
+                <div class="sidepanel" style="position: relative;  justify-content: center;">
+                    <!-- Link to post an item -->
+                    <h4 id="post-item-link" style="margin-top: 5px;"><a href="/html/post.html"> Post an item!</a></h4>
                     <!-- Logout link at the bottom -->
+                    <button id="delete-user-button" class="btn btn-danger"
+                        style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);">Delete
+                        User</button>
                     <a href="/logout" id="logout-button" class="btn btn-danger"
-                        style="position: absolute; bottom: 0; display: none;">Logout</a>
+                        style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); display: none;">Logout</a>
                 </div>
             </aside>
-
             <main class="col-9"><!-- adjust the width as needed -->
                 <div class="maincontent">
                     <!-- {{if .SignupSuccess}}
@@ -93,15 +93,50 @@
                 if (response.status === 200) {
                     // User is logged in, display their posted items and the logout button
                     console.log("layout.html: Response status = ", response.status);
+                    console.log("layout.html: Response status = ", response.body);
+                    document.getElementById('login-item').style.display = 'none';
                     // document.getElementById('user-items').style.display = 'block';
                     document.getElementById('logout-button').style.display = 'block';  // Show the logout button
+                    const p = document.createElement('p');
+
+                    let dateTimeString = new Date().toLocaleString();
+                    p.textContent = `Hello! The current date and time is ${dateTimeString}`;
+                    document.body.appendChild(p);
+
+                    document.getElementById('delete-user-button').onclick = function () {
+                        fetch(`/deleteUser`, {
+                            method: 'DELETE',
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                // Manually redirect to the new URL
+                                window.location.href = response.url;
+                            })
+                            .catch(error => {
+                                console.error('There has been a problem with your fetch operation:', error);
+                            });
+                    };
 
                 } else {
                     // User is not logged in, display all posted items and hide the logout button
+
+                    // Hide the <aside> element
+                    var asideElement = document.querySelector('aside.col-2');
+                    asideElement.style.display = 'none';
+
+                    // Center the <main> element
+                    var mainElement = document.querySelector('main.col-9');
+                    mainElement.style.margin = '0 auto';
+                    mainElement.style.float = 'none';
+
+                    document.getElementById('delete-user-button').style.display = 'none';
                     console.log("layout.html: Response status = ", response.status);
                     // document.getElementById('all-items').style.display = 'block';
                     document.getElementById('logout-button').style.display = 'none';  // Hide the logout button
-
+                    document.getElementById('login-item').style.display = 'block';
+                    document.getElementById('post-item-link').style.display = 'none';
                 }
             });
     }

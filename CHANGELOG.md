@@ -1,5 +1,17 @@
 <hr>
 
+### Tue Jun 4 15:25:20 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `74d67efcd71d6e22c372534f9d8f4c75354d74e8`
+
+
+[Update]: Items can be displayed, users can login/logout
+
+Time spent: 15 hrs
+
+
+<hr>
+
 ### Sun Jun 2 23:48:51 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `d65574daff837038be502459da3c6a9a072fec4e`

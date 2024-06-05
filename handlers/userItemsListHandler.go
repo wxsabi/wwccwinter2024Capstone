@@ -62,17 +62,17 @@ func GetUserItems(w http.ResponseWriter, r *http.Request) {
 		}
 		items = append(items, item)
 	}
-	fmt.Println("items = append(items, item)", items)
+	//fmt.Println("items = append(items, item)", items)
 	json.NewEncoder(w).Encode(items)
 	defer rows.Close()
 
-	jsonData, err := json.Marshal(items)
-	if err != nil {
-		// handle error
-		fmt.Println("error with json.Marshal:", err)
-		return
-	}
-	fmt.Println("JSON data to send: ", string(jsonData))
+	// jsonData, err := json.Marshal(items)
+	// if err != nil {
+	// 	// handle error
+	// 	fmt.Println("error with json.Marshal:", err)
+	// 	return
+	// }
+	//fmt.Println("JSON data to send: ", string(jsonData))
 
 	fmt.Println("Ending GetUserItems()")
 }
