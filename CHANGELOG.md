@@ -1,5 +1,29 @@
 <hr>
 
+### Wed Jun 5 02:14:33 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `81f2ba1212539416a9b1b55e640773e3d50e247b`
+
+
+[Added]: Added user manual
+
+Time spent: --
+
+
+<hr>
+
+### Wed Jun 5 02:14:33 2024 -0700
+#### Author: Joaquín Cisneros <jaycisneros@jacm.io>
+#### commit: `81f2ba1212539416a9b1b55e640773e3d50e247b`
+
+
+[Added]: Added user manual
+
+Time spent: --
+
+
+<hr>
+
 ### Wed Jun 5 01:36:17 2024 -0700
 #### Author: Joaquín Cisneros <jaycisneros@jacm.io>
 #### commit: `2aa2b71014c10713f5adabddaa654b138e8ac994`
